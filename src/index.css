@@ -2,14 +2,19 @@
 
 @layer base {
   :root {
-    --font-sans: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+    --font-display: 'Syne', 'Plus Jakarta Sans', sans-serif;
+    --font-sans: 'Plus Jakarta Sans', sans-serif;
     --font-mono: 'JetBrains Mono', monospace;
   }
 
   body {
     font-family: var(--font-sans);
-    background-color: #09090b;
-    color: #f4f4f5;
+    background-color: #1e1510;
+    color: #181513;
+  }
+
+  h1, h2, h3, .font-display {
+    font-family: var(--font-display);
   }
 
   code, pre, .font-mono {
@@ -17,76 +22,105 @@
   }
 }
 
-/* Custom Glassmorphism & Glow Styles */
-.glass-panel {
-  background: rgba(18, 18, 24, 0.75);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+/* Tactile Paper Texture & Crumple Creases */
+.paper-canvas {
+  background-color: #f2ebe0;
+  background-image: 
+    radial-gradient(at 0% 0%, rgba(255, 255, 255, 0.45) 0px, transparent 50%),
+    radial-gradient(at 100% 0%, rgba(230, 218, 202, 0.5) 0px, transparent 50%),
+    radial-gradient(at 100% 100%, rgba(220, 206, 190, 0.6) 0px, transparent 50%),
+    radial-gradient(at 0% 100%, rgba(245, 238, 228, 0.5) 0px, transparent 50%),
+    linear-gradient(135deg, rgba(0,0,0,0.02) 25%, transparent 25%),
+    linear-gradient(225deg, rgba(0,0,0,0.02) 25%, transparent 25%);
+  box-shadow: 
+    0 25px 60px -15px rgba(0, 0, 0, 0.65),
+    0 0 0 1px rgba(0, 0, 0, 0.25),
+    inset 0 0 80px rgba(180, 160, 130, 0.18);
+  position: relative;
 }
 
-.glass-panel-hover {
-  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
-}
-.glass-panel-hover:hover {
-  background: rgba(24, 24, 32, 0.9);
-  border-color: rgba(249, 115, 22, 0.35);
-  box-shadow: 0 10px 30px -10px rgba(249, 115, 22, 0.15);
-}
-
-.glass-pill {
-  background: rgba(255, 255, 255, 0.05);
-  backdrop-filter: blur(8px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-.glow-orange {
-  box-shadow: 0 0 25px -5px rgba(249, 115, 22, 0.4);
+/* Authentic Paper Crease Fold Lines Overlay */
+.paper-crease-overlay {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: 
+    linear-gradient(108deg, transparent 48.5%, rgba(0,0,0,0.035) 49.5%, rgba(255,255,255,0.08) 50%, rgba(0,0,0,0.04) 51%, transparent 52%),
+    linear-gradient(172deg, transparent 65%, rgba(0,0,0,0.04) 66%, rgba(255,255,255,0.07) 66.5%, transparent 68%),
+    linear-gradient(28deg, transparent 32%, rgba(0,0,0,0.03) 33%, rgba(255,255,255,0.06) 33.5%, transparent 35%),
+    linear-gradient(142deg, transparent 78%, rgba(0,0,0,0.025) 79%, rgba(255,255,255,0.05) 79.5%, transparent 81%);
+  mix-blend-mode: multiply;
+  z-index: 1;
 }
 
-.glow-violet {
-  box-shadow: 0 0 25px -5px rgba(139, 92, 246, 0.4);
+/* Paper Card Styles */
+.paper-card {
+  background: #ffffff;
+  border: 1px solid #e7ded0;
+  box-shadow: 0 4px 20px -2px rgba(45, 30, 20, 0.06);
 }
 
-.glow-cyan {
-  box-shadow: 0 0 25px -5px rgba(6, 182, 212, 0.4);
+.paper-card-dark {
+  background: #110e0c;
+  color: #f7f3ec;
+  border: 1px solid #28211b;
+  box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.35);
 }
 
-/* Custom subtle scrollbar */
+/* Rotating Stamp Animation */
+@keyframes spin-stamp {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.animate-spin-slow {
+  animation: spin-stamp 14s linear infinite;
+}
+
+/* Dot Matrix Graphics */
+.dot-matrix {
+  display: grid;
+  grid-template-columns: repeat(4, 5px);
+  gap: 3px;
+}
+
+.dot-matrix-item {
+  width: 5px;
+  height: 5px;
+  border-radius: 1px;
+  background-color: #ff5522;
+}
+
+/* Segmented Button */
+.btn-segmented {
+  display: inline-flex;
+  align-items: center;
+  background: #ff5522;
+  color: #ffffff;
+  border-radius: 9999px;
+  font-weight: 800;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 4px 14px rgba(255, 85, 34, 0.35);
+}
+
+.btn-segmented:hover {
+  background: #f04815;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 20px rgba(255, 85, 34, 0.45);
+}
+
+/* Custom Scrollbar */
 ::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
+  width: 7px;
+  height: 7px;
 }
 ::-webkit-scrollbar-track {
-  background: #09090b;
+  background: #1e1510;
 }
 ::-webkit-scrollbar-thumb {
-  background: #27272a;
+  background: #47372b;
   border-radius: 4px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #3f3f46;
-}
-
-/* Pulse animation for scanning */
-@keyframes radar-scan {
-  0% { transform: translateY(-100%); opacity: 0; }
-  50% { opacity: 0.8; }
-  100% { transform: translateY(1000%); opacity: 0; }
-}
-
-.animate-radar {
-  animation: radar-scan 2.4s ease-in-out infinite;
-}
-
-/* Shimmer gradient animation */
-@keyframes shimmer {
-  0% { background-position: -200% 0; }
-  100% { background-position: 200% 0; }
-}
-
-.animate-shimmer {
-  background: linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.06) 50%, rgba(255,255,255,0) 100%);
-  background-size: 200% 100%;
-  animation: shimmer 2s infinite;
+  background: #6a5342;
 }

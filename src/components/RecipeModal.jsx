@@ -55,35 +55,35 @@ export const RecipeModal = ({ recipe, creator, isOpen, onClose, onForkRecipe, on
   const seed = promptArch.seedLock || recipe.seedLock || '4928172940';
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 bg-black/85 backdrop-blur-md overflow-y-auto animate-fadeIn">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 bg-black/75 backdrop-blur-md overflow-y-auto animate-fadeIn">
       <div 
-        className="relative w-full max-w-4xl bg-[#101015] border border-zinc-700/80 rounded-2xl shadow-2xl shadow-orange-500/10 overflow-hidden my-auto"
+        className="relative w-full max-w-4xl bg-white border border-[#dfd5c4] rounded-3xl shadow-2xl overflow-hidden my-auto"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Modal Header */}
-        <div className="p-5 sm:p-6 border-b border-zinc-800 bg-gradient-to-r from-zinc-900 via-zinc-900/90 to-zinc-950 flex items-start justify-between gap-4">
+        <div className="p-5 sm:p-6 border-b border-[#dfd5c4] bg-[#faf6f0] flex items-start justify-between gap-4">
           <div className="space-y-1">
             <div className="flex flex-wrap items-center gap-2">
-              <span className="px-2.5 py-0.5 rounded-full text-[11px] font-semibold bg-orange-500/15 text-orange-400 border border-orange-500/30 flex items-center gap-1">
+              <span className="px-3 py-1 rounded-full text-[11px] font-bold bg-[#ff5522]/10 text-[#ff5522] border border-[#ff5522]/20 flex items-center gap-1">
                 <Sparkles className="w-3 h-3" />
                 AI Production Recipe
               </span>
-              <span className="px-2 py-0.5 rounded text-[11px] font-mono bg-zinc-800 text-zinc-300 border border-zinc-700 flex items-center gap-1">
-                <Lock className="w-3 h-3 text-amber-400" />
+              <span className="px-2.5 py-1 rounded-full text-[11px] font-mono font-bold bg-white text-neutral-800 border border-[#dfd5c4] flex items-center gap-1">
+                <Lock className="w-3 h-3 text-[#ff5522]" />
                 Seed Locked: {seed}
               </span>
-              <span className="px-2 py-0.5 rounded text-[11px] font-semibold bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 flex items-center gap-1">
-                <ShieldCheck className="w-3 h-3" />
+              <span className="px-2.5 py-1 rounded-full text-[11px] font-bold bg-black text-white flex items-center gap-1">
+                <ShieldCheck className="w-3 h-3 text-[#ff5522]" />
                 Clear-to-Air™ Verified
               </span>
             </div>
             
-            <h2 className="text-xl sm:text-2xl font-bold text-white tracking-tight pt-1">
+            <h2 className="font-display font-black text-xl sm:text-2xl text-black tracking-tight pt-1">
               {recipe.title || 'Production Specification Breakdown'}
             </h2>
-            <p className="text-xs text-zinc-400 flex items-center gap-1.5">
+            <p className="text-xs text-neutral-600 flex items-center gap-1.5 font-medium">
               <span>Authored by</span>
-              <span className="text-orange-400 font-medium">{creator?.name || 'Lead Creator'}</span>
+              <span className="text-black font-bold">{creator?.name || 'Lead Creator'}</span>
               <span>•</span>
               <span>{recipe.resolution || '4K UHD Cinema Master'}</span>
               <span>•</span>
@@ -93,20 +93,20 @@ export const RecipeModal = ({ recipe, creator, isOpen, onClose, onForkRecipe, on
 
           <button
             onClick={onClose}
-            className="p-2 rounded-xl bg-zinc-800/80 hover:bg-zinc-700 text-zinc-400 hover:text-white transition-colors"
+            className="p-2 rounded-full bg-white hover:bg-neutral-100 text-neutral-600 hover:text-black transition-colors border border-[#dfd5c4]"
           >
             <X className="w-5 h-5" />
           </button>
         </div>
 
         {/* Navigation Tabs within Modal */}
-        <div className="flex border-b border-zinc-800 bg-zinc-950/60 px-6 gap-2 overflow-x-auto">
+        <div className="flex border-b border-[#dfd5c4] bg-white px-6 gap-2 overflow-x-auto">
           <button
             onClick={() => setActiveTab('models')}
-            className={`py-3 px-3 text-xs font-semibold border-b-2 flex items-center gap-2 transition-all whitespace-nowrap ${
+            className={`py-3 px-3 text-xs font-bold border-b-2 flex items-center gap-2 transition-all whitespace-nowrap ${
               activeTab === 'models'
-                ? 'border-orange-500 text-orange-400'
-                : 'border-transparent text-zinc-400 hover:text-zinc-200'
+                ? 'border-[#ff5522] text-[#ff5522]'
+                : 'border-transparent text-neutral-500 hover:text-black'
             }`}
           >
             <Cpu className="w-4 h-4" />
@@ -115,10 +115,10 @@ export const RecipeModal = ({ recipe, creator, isOpen, onClose, onForkRecipe, on
 
           <button
             onClick={() => setActiveTab('pipeline')}
-            className={`py-3 px-3 text-xs font-semibold border-b-2 flex items-center gap-2 transition-all whitespace-nowrap ${
+            className={`py-3 px-3 text-xs font-bold border-b-2 flex items-center gap-2 transition-all whitespace-nowrap ${
               activeTab === 'pipeline'
-                ? 'border-orange-500 text-orange-400'
-                : 'border-transparent text-zinc-400 hover:text-zinc-200'
+                ? 'border-[#ff5522] text-[#ff5522]'
+                : 'border-transparent text-neutral-500 hover:text-black'
             }`}
           >
             <Layers className="w-4 h-4" />
@@ -127,10 +127,10 @@ export const RecipeModal = ({ recipe, creator, isOpen, onClose, onForkRecipe, on
 
           <button
             onClick={() => setActiveTab('prompt')}
-            className={`py-3 px-3 text-xs font-semibold border-b-2 flex items-center gap-2 transition-all whitespace-nowrap ${
+            className={`py-3 px-3 text-xs font-bold border-b-2 flex items-center gap-2 transition-all whitespace-nowrap ${
               activeTab === 'prompt'
-                ? 'border-orange-500 text-orange-400'
-                : 'border-transparent text-zinc-400 hover:text-zinc-200'
+                ? 'border-[#ff5522] text-[#ff5522]'
+                : 'border-transparent text-neutral-500 hover:text-black'
             }`}
           >
             <Terminal className="w-4 h-4" />
@@ -139,10 +139,10 @@ export const RecipeModal = ({ recipe, creator, isOpen, onClose, onForkRecipe, on
 
           <button
             onClick={() => setActiveTab('clearance')}
-            className={`py-3 px-3 text-xs font-semibold border-b-2 flex items-center gap-2 transition-all whitespace-nowrap ${
+            className={`py-3 px-3 text-xs font-bold border-b-2 flex items-center gap-2 transition-all whitespace-nowrap ${
               activeTab === 'clearance'
-                ? 'border-orange-500 text-orange-400'
-                : 'border-transparent text-zinc-400 hover:text-zinc-200'
+                ? 'border-[#ff5522] text-[#ff5522]'
+                : 'border-transparent text-neutral-500 hover:text-black'
             }`}
           >
             <ShieldCheck className="w-4 h-4" />
@@ -413,9 +413,9 @@ export const RecipeModal = ({ recipe, creator, isOpen, onClose, onForkRecipe, on
         </div>
 
         {/* Modal Footer with Actions */}
-        <div className="p-4 sm:p-5 border-t border-zinc-800 bg-gradient-to-r from-zinc-950 via-zinc-900 to-zinc-950 flex flex-col sm:flex-row items-center justify-between gap-3">
-          <div className="flex items-center gap-2 text-xs text-zinc-400">
-            <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+        <div className="p-4 sm:p-5 border-t border-[#dfd5c4] bg-[#faf6f0] flex flex-col sm:flex-row items-center justify-between gap-3">
+          <div className="flex items-center gap-2 text-xs text-neutral-600 font-medium">
+            <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
             <span>ComfyUI Node JSON & LoRA Weights Ready for Download</span>
           </div>
 
@@ -425,11 +425,11 @@ export const RecipeModal = ({ recipe, creator, isOpen, onClose, onForkRecipe, on
                 if (onForkRecipe) onForkRecipe(recipe);
                 onClose();
               }}
-              className="flex-1 sm:flex-initial flex items-center justify-center gap-2 px-4 py-2 text-xs font-bold rounded-xl bg-zinc-800 hover:bg-zinc-700 text-zinc-200 border border-zinc-700 transition-all hover:border-zinc-600"
+              className="flex-1 sm:flex-initial flex items-center justify-center gap-2 px-4 py-2 text-xs font-bold rounded-full bg-white hover:bg-neutral-100 text-neutral-900 border border-[#dfd5c4] transition-all shadow-sm"
               title="Preload this recipe's style tokens and AI model stack into the Brief Wizard"
             >
-              <GitFork className="w-3.5 h-3.5 text-violet-400" />
-              <span>Fork Recipe to Brief Wizard</span>
+              <GitFork className="w-3.5 h-3.5 text-[#ff5522]" />
+              <span>Fork to Brief Wizard</span>
             </button>
 
             <button
@@ -437,7 +437,7 @@ export const RecipeModal = ({ recipe, creator, isOpen, onClose, onForkRecipe, on
                 if (onBookCreator) onBookCreator(creator, recipe);
                 onClose();
               }}
-              className="flex-1 sm:flex-initial flex items-center justify-center gap-2 px-4 py-2 text-xs font-bold rounded-xl bg-gradient-to-r from-orange-500 to-amber-500 hover:brightness-110 text-white shadow-lg shadow-orange-500/20 transition-all"
+              className="flex-1 sm:flex-initial flex items-center justify-center gap-2 px-5 py-2 text-xs font-black rounded-full bg-[#ff5522] hover:bg-[#eb4817] text-white shadow-md transition-all"
             >
               <Sparkles className="w-3.5 h-3.5" />
               <span>Book with this Recipe</span>

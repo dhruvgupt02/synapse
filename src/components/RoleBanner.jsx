@@ -3,29 +3,29 @@ import { ShieldCheck, Sparkles, Sliders, ArrowRight, Layers, FileCheck, Award, Z
 
 export const RoleBanner = ({ userRole, setUserRole, onActionClick }) => {
   return (
-    <div className="w-full bg-gradient-to-r from-zinc-950 via-zinc-900 to-zinc-950 border-b border-zinc-800/60 py-2.5 px-4">
-      <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-2 text-xs">
+    <div className="w-full border-y border-[#dfd5c4]/70 bg-[#ede4d7]/60 py-2 px-5 sm:px-10">
+      <div className="flex flex-col sm:flex-row items-center justify-between gap-2 text-xs">
         
         {/* Left Side: Contextual Indian Role Message */}
-        <div className="flex items-center gap-2 text-zinc-300">
+        <div className="flex items-center gap-2 text-neutral-800">
           {userRole === 'brand' ? (
             <>
-              <div className="flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-orange-500/10 text-orange-400 border border-orange-500/30 font-semibold text-[11px]">
-                <ShieldCheck className="w-3.5 h-3.5" />
-                Indian Brand & Agency Mode
+              <div className="flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-black text-white font-bold text-[10px] tracking-wide uppercase">
+                <ShieldCheck className="w-3 h-3 text-[#ff5522]" />
+                Brand & Agency Mode
               </div>
-              <span className="text-zinc-400 hidden md:inline">
-                Access ASCI Synthetic Media Compliant & Clear-to-Air™ certified Indian AI creators, locked in ₹ INR smart escrow.
+              <span className="text-neutral-600 font-medium hidden md:inline text-[11px]">
+                ASCI Synthetic Media Compliant & Clear-to-Air™ certified Indian AI creators with ₹ INR escrow.
               </span>
             </>
           ) : (
             <>
-              <div className="flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-violet-500/10 text-violet-400 border border-violet-500/30 font-semibold text-[11px]">
-                <Layers className="w-3.5 h-3.5" />
-                Indian AI Creator Mode
+              <div className="flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-black text-white font-bold text-[10px] tracking-wide uppercase">
+                <Layers className="w-3 h-3 text-[#ff5522]" />
+                AI Creator Mode
               </div>
-              <span className="text-zinc-400 hidden md:inline">
-                Showcase Indian bridal consistency LoRAs, Bollywood VFX ComfyUI nodes, fork recipes, and pitch to top brands.
+              <span className="text-neutral-600 font-medium hidden md:inline text-[11px]">
+                Showcase Indian bridal consistency LoRAs, Bollywood VFX ComfyUI nodes, fork recipes & pitch in ₹ INR.
               </span>
             </>
           )}
@@ -33,18 +33,18 @@ export const RoleBanner = ({ userRole, setUserRole, onActionClick }) => {
 
         {/* Right Side: Quick Action or Switch Hint */}
         <div className="flex items-center gap-3">
-          <div className="flex items-center gap-1.5 text-zinc-400 text-[11px]">
-            <span>Active Perspective:</span>
-            <span className="font-semibold text-zinc-200 uppercase tracking-wider">
+          <div className="flex items-center gap-1.5 text-neutral-600 text-[11px] font-medium">
+            <span>Perspective:</span>
+            <span className="font-bold text-black uppercase tracking-wider">
               {userRole === 'brand' ? 'Brand Commissioner (INR)' : 'Generative Director'}
             </span>
           </div>
 
           <button
             onClick={() => setUserRole(userRole === 'brand' ? 'creator' : 'brand')}
-            className="flex items-center gap-1 text-[11px] font-semibold text-orange-400 hover:text-orange-300 transition-colors"
+            className="flex items-center gap-1 text-[11px] font-bold text-[#ff5522] hover:text-[#d94112] transition-colors"
           >
-            <span>Switch to {userRole === 'brand' ? 'Creator' : 'Brand'} View</span>
+            <span>Switch to {userRole === 'brand' ? 'Creator' : 'Brand'}</span>
             <ArrowRight className="w-3 h-3" />
           </button>
         </div>

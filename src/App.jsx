@@ -32,7 +32,7 @@ import {
   getApiKeysStatus 
 } from './utils/api';
 
-import { Sparkles, ShieldCheck, Zap, ArrowRight, Film, CheckCircle2, Award, Key } from 'lucide-react';
+import { Sparkles, ShieldCheck, Zap, ArrowRight, Film, CheckCircle2, Award, Key, Globe, Grid } from 'lucide-react';
 
 export function App() {
   // Navigation & Role State
@@ -136,11 +136,9 @@ export function App() {
 
   // Publish Brief from Brief Builder
   const handlePublishBrief = async (newBrief) => {
-    // 1. Save to local storage
     const updatedLocal = saveBriefToStorage(newBrief);
     if (updatedLocal) setBriefs(updatedLocal);
 
-    // 2. Persist to Express backend
     try {
       await createBrief(newBrief);
     } catch (e) {}
@@ -158,7 +156,6 @@ export function App() {
 
   // Filter Execution
   const filteredCreators = creators.filter((creator) => {
-    // 1. Search query
     if (searchQuery.trim() !== '') {
       const q = searchQuery.toLowerCase();
       const matchName = creator.name.toLowerCase().includes(q);
@@ -176,18 +173,15 @@ export function App() {
       }
     }
 
-    // 2. Tools
     if (selectedTools.length > 0) {
       const hasTool = selectedTools.some(tool => creator.primaryTools.includes(tool));
       if (!hasTool) return false;
     }
 
-    // 3. Specialization
     if (selectedSpecialization !== 'All') {
       if (!creator.specializations.includes(selectedSpecialization)) return false;
     }
 
-    // 4. Verification
     if (selectedVerification !== 'All') {
       if (selectedVerification === 'Commercial Safety Certified' && !creator.clearToAirCertified) {
         return false;
@@ -197,12 +191,10 @@ export function App() {
       }
     }
 
-    // 5. Turnaround
     if (selectedTurnaround !== 'All') {
       if (creator.turnaround !== selectedTurnaround) return false;
     }
 
-    // 6. Clear-to-Air Only
     if (clearToAirOnly && !creator.clearToAirCertified) {
       return false;
     }
@@ -226,224 +218,482 @@ export function App() {
   };
 
   return (
-    <div className="min-h-screen bg-[#09090b] text-zinc-100 flex flex-col font-sans selection:bg-orange-500/30 selection:text-orange-200">
+    <div className="min-h-screen bg-[#1c120c] p-2 sm:p-5 md:p-8 flex justify-center items-start font-sans selection:bg-[#ff5522] selection:text-white">
       
-      {/* Top Navbar */}
-      <Navbar 
-        activeTab={activeTab}
-        setActiveTab={setActiveTab}
-        userRole={userRole}
-        setUserRole={handleSetUserRole}
-        onOpenBriefModal={() => setActiveTab('brief-builder')}
-        onOpenKeysModal={() => setIsKeysModalOpen(true)}
-        hasApiKey={hasApiKey}
-      />
+      {/* Outer Paper Canvas Container */}
+      <div className="w-full max-w-[1420px] paper-canvas rounded-[24px] sm:rounded-[36px] overflow-hidden border border-[#d8ccbb]/70 shadow-2xl relative flex flex-col min-h-[96vh]">
+        <div className="paper-crease-overlay" />
 
-      {/* Dynamic Role Banner */}
-      <RoleBanner 
-        userRole={userRole}
-        setUserRole={handleSetUserRole}
-        onActionClick={() => setActiveTab(userRole === 'brand' ? 'brief-builder' : 'briefs')}
-      />
+        {/* Top Navbar */}
+        <Navbar 
+          activeTab={activeTab}
+          setActiveTab={setActiveTab}
+          userRole={userRole}
+          setUserRole={handleSetUserRole}
+          onOpenBriefModal={() => setActiveTab('brief-builder')}
+          onOpenKeysModal={() => setIsKeysModalOpen(true)}
+          hasApiKey={hasApiKey}
+        />
 
-      {/* Toast Notification Floating */}
-      {toast && (
-        <div className="fixed bottom-6 right-6 z-50 flex items-center gap-2.5 px-4 py-3 rounded-2xl bg-zinc-900 border border-orange-500/50 text-white text-xs font-semibold shadow-2xl shadow-orange-500/20 animate-fadeIn">
-          <Sparkles className="w-4 h-4 text-orange-400" />
-          <span>{toast.message}</span>
-        </div>
-      )}
+        {/* Dynamic Role Banner */}
+        <RoleBanner 
+          userRole={userRole}
+          setUserRole={handleSetUserRole}
+          onActionClick={() => setActiveTab(userRole === 'brand' ? 'brief-builder' : 'briefs')}
+        />
 
-      {/* Main Content Viewport */}
-      <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 pt-8">
-        
-        {/* VIEW 1: EXPLORE CREATORS & DISCOVERY */}
-        {activeTab === 'explore' && (
-          <div className="space-y-8 animate-fadeIn">
-            
-            {/* Hero Intro Header with Indian Context */}
-            <div className="relative rounded-3xl bg-gradient-to-r from-zinc-950 via-zinc-900 to-zinc-950 border border-zinc-800/80 p-6 sm:p-10 overflow-hidden shadow-2xl">
-              <div className="relative z-10 max-w-3xl space-y-4">
-                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-orange-500/10 text-orange-400 border border-orange-500/20 text-xs font-semibold">
-                  <ShieldCheck className="w-3.5 h-3.5" />
-                  <span>ASCI Synthetic Media Disclosure & Clear-to-Air™ Protocol</span>
-                </div>
+        {/* Toast Notification Floating */}
+        {toast && (
+          <div className="fixed bottom-6 right-6 z-50 flex items-center gap-2.5 px-4 py-3 rounded-2xl bg-black border border-[#ff5522]/60 text-white text-xs font-semibold shadow-2xl shadow-black/40 animate-fadeIn">
+            <Sparkles className="w-4 h-4 text-[#ff5522]" />
+            <span>{toast.message}</span>
+          </div>
+        )}
+
+        {/* Main Content Viewport */}
+        <main className="flex-1 w-full px-5 sm:px-10 py-6 sm:py-8 relative z-10">
+          
+          {/* VIEW 1: EXPLORE CREATORS & DISCOVERY */}
+          {activeTab === 'explore' && (
+            <div className="space-y-12 animate-fadeIn">
+              
+              {/* HERO SECTION MATCHING REFERENCE IMAGE */}
+              <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center pt-2 pb-6">
                 
-                <h1 className="text-3xl sm:text-5xl font-extrabold tracking-tight text-white leading-tight">
-                  Direct the Future with India's <br />
-                  <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-400 via-amber-300 to-emerald-400">
-                    Recipe-First AI Creators
-                  </span>
-                </h1>
+                {/* Left Column: Bold Neo-Grotesque Display Title + Segmented Orange Button */}
+                <div className="lg:col-span-7 space-y-6">
+                  
+                  {/* Headline: CONTENT [:::] THAT BUILDS INFLUENCE */}
+                  <div className="space-y-1">
+                    <div className="flex items-start">
+                      <h1 className="font-display font-black text-5xl sm:text-7xl lg:text-[5.5rem] tracking-tight leading-[0.92] text-black uppercase select-none">
+                        CONTENT
+                      </h1>
+                      {/* Orange Dot Matrix Grid */}
+                      <div className="inline-grid grid-cols-4 gap-1 p-1 ml-4 mt-2 bg-[#ff5522]/10 rounded border border-[#ff5522]/20">
+                        {Array.from({ length: 16 }).map((_, i) => (
+                          <span key={i} className="w-1.5 h-1.5 rounded-[1px] bg-[#ff5522]" />
+                        ))}
+                      </div>
+                    </div>
+                    
+                    <h1 className="font-display font-black text-5xl sm:text-7xl lg:text-[5.5rem] tracking-tight leading-[0.92] text-black uppercase select-none">
+                      THAT BUILDS
+                    </h1>
+                    <h1 className="font-display font-black text-5xl sm:text-7xl lg:text-[5.5rem] tracking-tight leading-[0.92] text-black uppercase select-none">
+                      INFLUENCE
+                    </h1>
+                  </div>
 
-                <p className="text-sm sm:text-base text-zinc-300 max-w-2xl leading-relaxed">
-                  Connect with elite Indian generative directors, Bollywood VFX leads, and virtual bridal couture specialists. Inspect real ComfyUI node workflows, custom LoRA consistency indices, and locked seed architectures before commissioning in ₹ INR.
-                </p>
+                  {/* Segmented Button + Editorial Subtext */}
+                  <div className="flex flex-wrap items-center gap-6 pt-2">
+                    <button 
+                      onClick={() => setActiveTab('brief-builder')}
+                      className="btn-segmented group shadow-lg shadow-[#ff5522]/30"
+                    >
+                      <span className="px-7 py-4 text-sm sm:text-base font-extrabold tracking-tight">
+                        Start Creating
+                      </span>
+                      <span className="bg-[#e24413] px-4 py-4 flex items-center justify-center border-l border-white/20">
+                        <div className="grid grid-cols-2 gap-1">
+                          <span className="w-1.5 h-1.5 rounded-full bg-white" />
+                          <span className="w-1.5 h-1.5 rounded-full bg-white" />
+                          <span className="w-1.5 h-1.5 rounded-full bg-white" />
+                          <span className="w-1.5 h-1.5 rounded-full bg-white" />
+                        </div>
+                      </span>
+                    </button>
 
-                <div className="flex flex-wrap items-center gap-3 pt-2">
+                    <p className="text-xs sm:text-sm font-semibold text-neutral-800 leading-tight">
+                      Create high-quality<br />
+                      content, collaborate<br />
+                      with community
+                    </p>
+                  </div>
+                </div>
+
+                {/* Right Column: Fashion Creator Card with CREATOR + PLATFORM & Rotating Stamp */}
+                <div className="lg:col-span-5 flex justify-center lg:justify-end">
+                  <div className="relative w-full max-w-[380px] sm:max-w-[420px] rounded-[32px] overflow-visible bg-white p-3.5 shadow-2xl border border-[#e2d7c9]">
+                    
+                    {/* Creator Photo */}
+                    <div className="relative rounded-[24px] overflow-hidden bg-[#faf6f0] aspect-[4/4.5]">
+                      <img 
+                        src="/images/hero-creator.jpg" 
+                        alt="Creator & Platform"
+                        className="w-full h-full object-cover object-top hover:scale-105 transition-transform duration-700" 
+                      />
+                      
+                      {/* Dark Bottom Badge on Card: CREATOR + PLATFORM */}
+                      <div className="absolute bottom-3 left-3 bg-black text-white px-5 py-3 rounded-2xl flex flex-col shadow-lg z-10">
+                        <span className="font-display font-black text-sm tracking-widest uppercase">
+                          CREATOR +
+                        </span>
+                        <span className="font-display font-black text-xs tracking-wider text-neutral-300 uppercase">
+                          PLATFORM
+                        </span>
+                      </div>
+                    </div>
+
+                    {/* Attached Rotating Circular Badge Stamp */}
+                    <div className="absolute -bottom-4 -right-4 w-28 h-28 sm:w-32 sm:h-32 flex items-center justify-center pointer-events-none z-20">
+                      <svg className="w-full h-full animate-spin-slow" viewBox="0 0 100 100">
+                        <path
+                          id="stampCirclePath"
+                          d="M 50, 50 m -37, 0 a 37,37 0 1,1 74,0 a 37,37 0 1,1 -74,0"
+                          fill="none"
+                        />
+                        <text className="text-[8.2px] font-mono font-black uppercase tracking-[2.6px] fill-black">
+                          <textPath href="#stampCirclePath" startOffset="0%">
+                            • NEW RECIPES DAILY • NEW RECIPES DAILY
+                          </textPath>
+                        </text>
+                      </svg>
+                      {/* Center Circle with Globe / Sparkles */}
+                      <div className="absolute w-12 h-12 rounded-full bg-black flex items-center justify-center shadow-lg border-2 border-white">
+                        <Globe className="w-6 h-6 text-[#38bdf8] animate-pulse" />
+                      </div>
+                    </div>
+
+                  </div>
+                </div>
+
+              </div>
+
+              {/* HORIZONTAL FEATURE ROW MATCHING REFERENCE IMAGE */}
+              <div className="pt-6 border-t border-[#dfd5c4] space-y-6">
+                <div className="grid grid-cols-1 md:grid-cols-12 gap-5 items-stretch">
+                  
+                  {/* Left Column (Span 4): Vintage Camera Card + Dark Celebration Card */}
+                  <div className="md:col-span-4 flex flex-col justify-between gap-5">
+                    
+                    {/* Top Item: Vintage Camera Card */}
+                    <div className="flex items-center gap-4 p-4 rounded-3xl bg-white/90 border border-[#e3d7c8] shadow-sm">
+                      <img 
+                        src="/images/vintage-camera.jpg" 
+                        alt="Vintage Camera" 
+                        className="w-16 h-16 rounded-2xl object-cover border border-[#e3d7c8]"
+                      />
+                      <div>
+                        <h4 className="font-display font-extrabold text-sm text-black leading-tight">
+                          Honoring visionary digital creators
+                        </h4>
+                        <p className="text-[11px] text-neutral-600 font-medium mt-0.5">
+                          India's top generative artists & AI directors
+                        </p>
+                      </div>
+                    </div>
+
+                    {/* Bottom Item: Dark Card with [System] [Clarity] [Consistency] Pills */}
+                    <div className="paper-card-dark rounded-3xl p-6 flex flex-col justify-between flex-1 relative overflow-hidden">
+                      <div className="flex items-center justify-between gap-2">
+                        <div className="flex items-center gap-1.5 flex-wrap">
+                          <span className="px-3 py-1 rounded-full bg-[#2563eb] text-white text-[11px] font-bold">
+                            System
+                          </span>
+                          <span className="px-3 py-1 rounded-full bg-white text-black text-[11px] font-bold">
+                            Clarity
+                          </span>
+                          <span className="px-3 py-1 rounded-full bg-[#ff5522] text-white text-[11px] font-bold">
+                            Consistency
+                          </span>
+                        </div>
+                        {/* Matrix Grid graphic */}
+                        <div className="grid grid-cols-3 gap-1">
+                          {Array.from({ length: 9 }).map((_, i) => (
+                            <span key={i} className="w-1 h-1 rounded-[1px] bg-[#ff5522]" />
+                          ))}
+                        </div>
+                      </div>
+
+                      <div className="mt-6">
+                        <h3 className="font-display font-black text-lg sm:text-xl text-white tracking-tight uppercase leading-snug">
+                          THE ULTIMATE CELEBRATION OF DIGITAL CREATIVITY
+                        </h3>
+                        <p className="text-xs text-neutral-400 font-medium mt-1">
+                          Locked seeds, LoRA consistency matrices, and C2PA provenance.
+                        </p>
+                      </div>
+                    </div>
+
+                  </div>
+
+                  {/* Center Column (Span 4): Elevated Upload Dropzone Card */}
+                  <div className="md:col-span-4">
+                    <div className="h-full rounded-3xl bg-white border border-[#dfd5c4] p-6 shadow-lg flex flex-col justify-between space-y-5">
+                      
+                      {/* Notch Header */}
+                      <div className="text-center space-y-0.5 border-b border-[#f1e8db] pb-3">
+                        <span className="font-display font-black text-sm tracking-wider uppercase text-black">
+                          UPLOAD YOUR CONTENT
+                        </span>
+                        <p className="text-[11px] text-neutral-500 font-medium">Drag & drop</p>
+                      </div>
+
+                      {/* Avatar with Glow Halo */}
+                      <div className="flex justify-center my-2">
+                        <div className="relative p-2 rounded-full bg-gradient-to-tr from-[#ff5522]/30 via-[#ff5522]/10 to-amber-400/20">
+                          <img 
+                            src="/images/avatar-upload.jpg" 
+                            alt="Creator Avatar" 
+                            className="w-20 h-20 rounded-full object-cover border-2 border-white shadow-md"
+                          />
+                        </div>
+                      </div>
+
+                      {/* Progress Bars */}
+                      <div className="space-y-3">
+                        <div className="p-3 rounded-2xl bg-[#faf6f0] border border-[#eee4d6] space-y-1.5">
+                          <div className="flex items-center justify-between text-xs font-bold text-neutral-900">
+                            <span className="flex items-center gap-1.5">
+                              <Film className="w-3.5 h-3.5 text-[#ff5522]" />
+                              Turn ideas into motion
+                            </span>
+                            <span className="font-mono text-[#ff5522]">90%</span>
+                          </div>
+                          <div className="w-full h-1.5 rounded-full bg-[#e8ded0] overflow-hidden">
+                            <div className="h-full bg-[#ff5522] rounded-full transition-all duration-1000" style={{ width: '90%' }} />
+                          </div>
+                        </div>
+
+                        <div className="p-3 rounded-2xl bg-[#faf6f0] border border-[#eee4d6] space-y-1.5">
+                          <div className="flex items-center justify-between text-xs font-bold text-neutral-900">
+                            <span className="flex items-center gap-1.5">
+                              <Film className="w-3.5 h-3.5 text-neutral-500" />
+                              Ethereal flower close-up
+                            </span>
+                            <span className="font-mono text-neutral-700">65%</span>
+                          </div>
+                          <div className="w-full h-1.5 rounded-full bg-[#e8ded0] overflow-hidden">
+                            <div className="h-full bg-neutral-800 rounded-full transition-all duration-1000" style={{ width: '65%' }} />
+                          </div>
+                        </div>
+                      </div>
+
+                      <button
+                        onClick={() => setActiveTab('brief-builder')}
+                        className="w-full py-2.5 rounded-full bg-[#f1e8dc] hover:bg-[#eae0d2] text-neutral-900 text-xs font-bold transition-colors"
+                      >
+                        Launch Direct Ingestion ⚡
+                      </button>
+
+                    </div>
+                  </div>
+
+                  {/* Right Column (Span 4): Trophy Card + Smartphone Mockup Card */}
+                  <div className="md:col-span-4 flex flex-col justify-between gap-5">
+                    
+                    {/* Top Item: Laurel Trophy Card */}
+                    <div className="flex items-center gap-4 p-4 rounded-3xl bg-white/90 border border-[#e3d7c8] shadow-sm">
+                      <div className="w-16 h-16 rounded-2xl bg-[#faf4ec] border border-[#e3d7c8] flex items-center justify-center text-[#ff5522]">
+                        <Award className="w-8 h-8" />
+                      </div>
+                      <div>
+                        <h4 className="font-display font-extrabold text-sm text-black leading-tight">
+                          Celebrating creative excellence 2026
+                        </h4>
+                        <p className="text-[11px] text-neutral-600 font-medium mt-0.5">
+                          ASCI Certified Commercial Standards
+                        </p>
+                      </div>
+                    </div>
+
+                    {/* Bottom Item: Smartphone Hand Card + Excellence in Modern Creation */}
+                    <div className="rounded-3xl bg-white border border-[#dfd5c4] p-5 shadow-sm flex items-center gap-4 flex-1">
+                      <img 
+                        src="/images/phone-creation.jpg" 
+                        alt="Phone Creation" 
+                        className="w-24 h-32 rounded-2xl object-cover border border-[#e3d7c8] shadow-sm flex-shrink-0"
+                      />
+                      <div className="flex flex-col justify-between h-full space-y-2">
+                        <div>
+                          <h4 className="font-display font-black text-sm sm:text-base text-black uppercase leading-tight">
+                            EXCELLENCE IN MODERN CONTENT CREATION
+                          </h4>
+                          <p className="text-[11px] text-neutral-600 font-medium mt-1 leading-snug">
+                            Scale generative campaigns with certified Indian directors.
+                          </p>
+                        </div>
+                        <button
+                          onClick={() => {
+                            const el = document.getElementById('marketplace-creators');
+                            if (el) el.scrollIntoView({ behavior: 'smooth' });
+                          }}
+                          className="inline-flex items-center gap-1 text-xs font-bold text-black hover:text-[#ff5522] transition-colors"
+                        >
+                          <span>Build Audience</span>
+                          <span className="text-base font-bold">↳</span>
+                        </button>
+                      </div>
+                    </div>
+
+                  </div>
+
+                </div>
+              </div>
+
+              {/* MARKETPLACE SEARCH & CREATORS SECTION */}
+              <div id="marketplace-creators" className="pt-8 space-y-6">
+                <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 border-b border-[#dfd5c4] pb-4">
+                  <div>
+                    <h2 className="font-display font-black text-2xl sm:text-3xl text-black uppercase tracking-tight">
+                      Curated AI Creators & Recipe Portfolios
+                    </h2>
+                    <p className="text-xs sm:text-sm text-neutral-600 font-medium">
+                      Filter by ComfyUI workflows, custom LoRAs, turnaround SLAs, and Clear-to-Air™ commercial safety.
+                    </p>
+                  </div>
                   <button
                     onClick={() => setActiveTab('brief-builder')}
-                    className="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-gradient-to-r from-orange-500 to-amber-500 hover:brightness-110 text-white font-bold text-xs shadow-lg shadow-orange-500/25 transition-all"
+                    className="flex items-center gap-1.5 px-4 py-2 rounded-full bg-black text-white text-xs font-bold hover:bg-neutral-800 transition-colors shadow-sm"
                   >
-                    <Zap className="w-4 h-4" />
-                    <span>Launch AI Brief Wizard</span>
-                  </button>
-
-                  <button
-                    onClick={() => setActiveTab('delivery-room')}
-                    className="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-zinc-800 hover:bg-zinc-700 text-zinc-200 border border-zinc-700 font-bold text-xs transition-colors"
-                  >
-                    <span>View Seed Studio Milestone Review</span>
-                    <ArrowRight className="w-3.5 h-3.5" />
+                    <Zap className="w-3.5 h-3.5 text-[#ff5522]" />
+                    <span>Create Brief Wizard</span>
                   </button>
                 </div>
+
+                {/* Smart Filter Bar */}
+                <SmartFilterBar 
+                  searchQuery={searchQuery}
+                  setSearchQuery={setSearchQuery}
+                  selectedTools={selectedTools}
+                  setSelectedTools={setSelectedTools}
+                  selectedSpecialization={selectedSpecialization}
+                  setSelectedSpecialization={setSelectedSpecialization}
+                  selectedVerification={selectedVerification}
+                  setSelectedVerification={setSelectedVerification}
+                  selectedTurnaround={selectedTurnaround}
+                  setSelectedTurnaround={setSelectedTurnaround}
+                  clearToAirOnly={clearToAirOnly}
+                  setClearToAirOnly={setClearToAirOnly}
+                  totalResultsCount={filteredCreators.length}
+                  onResetFilters={handleResetFilters}
+                />
+
+                {/* Creators Grid OR Smart Empty State */}
+                {filteredCreators.length > 0 ? (
+                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 pt-2">
+                    {filteredCreators.map((creator) => (
+                      <CreatorCard 
+                        key={creator.id}
+                        creator={creator}
+                        onSelectCreator={handleSelectCreator}
+                        onInspectRecipe={handleInspectRecipe}
+                        isSaved={savedCreatorIds.includes(creator.id)}
+                        onToggleSave={handleToggleSave}
+                        onBookCreator={(c) => handleOpenBooking(c)}
+                      />
+                    ))}
+                  </div>
+                ) : (
+                  <SmartEmptyState 
+                    selectedTools={selectedTools}
+                    selectedSpecialization={selectedSpecialization}
+                    onApplyAlternativeTool={handleApplyAlternativeTool}
+                    onResetFilters={handleResetFilters}
+                    onSelectCreator={handleSelectCreator}
+                  />
+                )}
               </div>
 
-              {/* Decorative background glow circle */}
-              <div className="absolute -right-20 -bottom-20 w-96 h-96 rounded-full bg-orange-500/10 blur-3xl pointer-events-none" />
-              <div className="absolute right-40 -top-20 w-80 h-80 rounded-full bg-emerald-600/10 blur-3xl pointer-events-none" />
+            </div>
+          )}
+
+          {/* VIEW 2: CREATOR PROFILE & RECIPE-FIRST PORTFOLIO */}
+          {activeTab === 'profile' && (
+            <CreatorProfileView 
+              creator={selectedCreator}
+              onBack={() => setActiveTab('explore')}
+              onInspectRecipe={handleInspectRecipe}
+              onBookCreator={(c) => handleOpenBooking(c)}
+              isSaved={savedCreatorIds.includes(selectedCreator?.id)}
+              onToggleSave={handleToggleSave}
+            />
+          )}
+
+          {/* VIEW 3: AI-ASSISTED BRIEF BUILDER */}
+          {activeTab === 'brief-builder' && (
+            <BriefBuilderView 
+              onPublishBrief={handlePublishBrief}
+              preloadedRecipe={preloadedRecipeForBrief}
+            />
+          )}
+
+          {/* VIEW 4: BRIEFS BOARD */}
+          {activeTab === 'briefs' && (
+            <BriefsBoardView 
+              briefs={briefs}
+              userRole={userRole}
+              onOpenBriefBuilder={() => setActiveTab('brief-builder')}
+              onOpenDeliveryStudio={(brief) => setActiveTab('delivery-room')}
+            />
+          )}
+
+          {/* VIEW 5: THE SEED BOARD DELIVERY & REVISION STUDIO */}
+          {activeTab === 'delivery-room' && (
+            <DeliveryStudioView 
+              userRole={userRole}
+              deliveryProjects={deliveryProjects}
+              onUpdateProjects={(updated) => setDeliveryProjects(updated)}
+            />
+          )}
+
+        </main>
+
+        {/* INSPECTABLE PRODUCTION RECIPE MODAL */}
+        <RecipeModal 
+          recipe={inspectingRecipe}
+          creator={inspectingCreator}
+          isOpen={!!inspectingRecipe}
+          onClose={() => setInspectingRecipe(null)}
+          onForkRecipe={handleForkRecipe}
+          onBookCreator={(creator, recipe) => handleOpenBooking(creator, recipe)}
+        />
+
+        {/* BOOK CREATOR DIRECT MODAL */}
+        <BookCreatorModal 
+          creator={bookingCreator}
+          recipe={inspectingRecipe}
+          isOpen={!!bookingCreator}
+          onClose={() => setBookingCreator(null)}
+          onBookingSuccess={() => {
+            showToast(`Commission sent to ${bookingCreator?.name} with ₹ INR escrow lock!`, 'success');
+            setActiveTab('delivery-room');
+          }}
+        />
+
+        {/* AI KEYS & BACKEND SETTINGS MODAL */}
+        <ApiKeysModal 
+          isOpen={isKeysModalOpen}
+          onClose={() => setIsKeysModalOpen(false)}
+          onKeysUpdated={() => {
+            loadBackendData();
+            showToast('AI engine settings updated!', 'success');
+          }}
+        />
+
+        {/* Footer */}
+        <footer className="mt-auto border-t border-[#dfd5c4] bg-[#eae0d2]/70 py-6 text-xs text-neutral-600 px-5 sm:px-10">
+          <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
+            <div className="flex items-center gap-2 text-neutral-700">
+              <span className="font-display font-black text-black text-sm">SYNAPSE.</span>
+              <span className="font-medium">• The AI-Native Creative Marketplace for India 🇮🇳</span>
             </div>
 
-            {/* Smart Filter Bar */}
-            <SmartFilterBar 
-              searchQuery={searchQuery}
-              setSearchQuery={setSearchQuery}
-              selectedTools={selectedTools}
-              setSelectedTools={setSelectedTools}
-              selectedSpecialization={selectedSpecialization}
-              setSelectedSpecialization={setSelectedSpecialization}
-              selectedVerification={selectedVerification}
-              setSelectedVerification={setSelectedVerification}
-              selectedTurnaround={selectedTurnaround}
-              setSelectedTurnaround={setSelectedTurnaround}
-              clearToAirOnly={clearToAirOnly}
-              setClearToAirOnly={setClearToAirOnly}
-              totalResultsCount={filteredCreators.length}
-              onResetFilters={handleResetFilters}
-            />
-
-            {/* Creators Grid OR Smart Empty State */}
-            {filteredCreators.length > 0 ? (
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {filteredCreators.map((creator) => (
-                  <CreatorCard 
-                    key={creator.id}
-                    creator={creator}
-                    onSelectCreator={handleSelectCreator}
-                    onInspectRecipe={handleInspectRecipe}
-                    isSaved={savedCreatorIds.includes(creator.id)}
-                    onToggleSave={handleToggleSave}
-                    onBookCreator={(c) => handleOpenBooking(c)}
-                  />
-                ))}
-              </div>
-            ) : (
-              <SmartEmptyState 
-                selectedTools={selectedTools}
-                selectedSpecialization={selectedSpecialization}
-                onApplyAlternativeTool={handleApplyAlternativeTool}
-                onResetFilters={handleResetFilters}
-                onSelectCreator={handleSelectCreator}
-              />
-            )}
-
+            <div className="flex items-center gap-3 text-neutral-600 flex-wrap">
+              <span className="flex items-center gap-1 font-bold text-black">
+                <ShieldCheck className="w-3.5 h-3.5 text-[#ff5522]" />
+                ASCI Synthetic Media Disclosure
+              </span>
+              <span>•</span>
+              <span className="font-mono">MeitY C2PA Provenance</span>
+              <span>•</span>
+              <span className="font-bold text-neutral-800">Smart Escrow (₹ INR)</span>
+            </div>
           </div>
-        )}
+        </footer>
 
-        {/* VIEW 2: CREATOR PROFILE & RECIPE-FIRST PORTFOLIO */}
-        {activeTab === 'profile' && (
-          <CreatorProfileView 
-            creator={selectedCreator}
-            onBack={() => setActiveTab('explore')}
-            onInspectRecipe={handleInspectRecipe}
-            onBookCreator={(c) => handleOpenBooking(c)}
-            isSaved={savedCreatorIds.includes(selectedCreator?.id)}
-            onToggleSave={handleToggleSave}
-          />
-        )}
-
-        {/* VIEW 3: AI-ASSISTED BRIEF BUILDER */}
-        {activeTab === 'brief-builder' && (
-          <BriefBuilderView 
-            onPublishBrief={handlePublishBrief}
-            preloadedRecipe={preloadedRecipeForBrief}
-          />
-        )}
-
-        {/* VIEW 4: BRIEFS BOARD */}
-        {activeTab === 'briefs' && (
-          <BriefsBoardView 
-            briefs={briefs}
-            userRole={userRole}
-            onOpenBriefBuilder={() => setActiveTab('brief-builder')}
-            onOpenDeliveryStudio={(brief) => setActiveTab('delivery-room')}
-          />
-        )}
-
-        {/* VIEW 5: THE SEED BOARD DELIVERY & REVISION STUDIO */}
-        {activeTab === 'delivery-room' && (
-          <DeliveryStudioView 
-            userRole={userRole}
-            deliveryProjects={deliveryProjects}
-            onUpdateProjects={(updated) => setDeliveryProjects(updated)}
-          />
-        )}
-
-      </main>
-
-      {/* INSPECTABLE PRODUCTION RECIPE MODAL */}
-      <RecipeModal 
-        recipe={inspectingRecipe}
-        creator={inspectingCreator}
-        isOpen={!!inspectingRecipe}
-        onClose={() => setInspectingRecipe(null)}
-        onForkRecipe={handleForkRecipe}
-        onBookCreator={(creator, recipe) => handleOpenBooking(creator, recipe)}
-      />
-
-      {/* BOOK CREATOR DIRECT MODAL */}
-      <BookCreatorModal 
-        creator={bookingCreator}
-        recipe={inspectingRecipe}
-        isOpen={!!bookingCreator}
-        onClose={() => setBookingCreator(null)}
-        onBookingSuccess={() => {
-          showToast(`Commission sent to ${bookingCreator?.name} with ₹ INR escrow lock!`, 'success');
-          setActiveTab('delivery-room');
-        }}
-      />
-
-      {/* AI KEYS & BACKEND SETTINGS MODAL */}
-      <ApiKeysModal 
-        isOpen={isKeysModalOpen}
-        onClose={() => setIsKeysModalOpen(false)}
-        onKeysUpdated={() => {
-          loadBackendData();
-          showToast('AI engine settings updated!', 'success');
-        }}
-      />
-
-      {/* Footer */}
-      <footer className="mt-auto border-t border-zinc-800/80 bg-[#09090b] py-8 text-xs text-zinc-500">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4">
-          <div className="flex items-center gap-2 text-zinc-400">
-            <span className="font-extrabold text-white">SYNAPSE</span>
-            <span>• The AI-Native Creative Marketplace for India 🇮🇳</span>
-          </div>
-
-          <div className="flex items-center gap-4 text-zinc-400">
-            <span className="flex items-center gap-1 text-emerald-400">
-              <ShieldCheck className="w-3.5 h-3.5" />
-              ASCI Synthetic Media Disclosure
-            </span>
-            <span>•</span>
-            <span className="font-mono">MeitY C2PA Provenance</span>
-            <span>•</span>
-            <span>Smart Escrow (₹ INR)</span>
-          </div>
-        </div>
-      </footer>
-
+      </div>
     </div>
   );
 }
