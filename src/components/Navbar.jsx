@@ -195,17 +195,7 @@ export const Navbar = ({
             </button>
           </div>
 
-          {/* RBAC Matrix Quick Trigger */}
-          {onOpenAccessModal && (
-            <button
-              onClick={onOpenAccessModal}
-              className="hidden xl:flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white hover:bg-neutral-50 text-neutral-800 border border-[#dfd5c4] text-xs font-bold transition-all shadow-sm hover:border-black/50"
-              title="Inspect Role-Based Access Control and Smart Escrow Permissions"
-            >
-              <ShieldCheck className="w-3.5 h-3.5 text-emerald-600" />
-              <span>RBAC Matrix</span>
-            </button>
-          )}
+
 
           {/* Black Pill CTA Button from Reference: "Register / Log In ↗" or "Post Brief ↗" */}
           <button
