@@ -18,7 +18,9 @@ export const Navbar = ({
   setActiveTab, 
   userRole, 
   setUserRole, 
-  onOpenBriefModal
+  onOpenBriefModal,
+  loggedInCreator,
+  onOpenCreatorLogin
 }) => {
   const [isCategoryMenuOpen, setIsCategoryMenuOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -135,8 +137,34 @@ export const Navbar = ({
           </button>
         </nav>
 
-        {/* Right Action Tools: Role Switcher, AI Key, Register/Post Brief Button */}
-        <div className="flex items-center gap-2.5 sm:gap-3.5">
+        {/* Right Action Tools: Role Switcher, Creator Chip, Register/Post Brief Button */}
+        <div className="flex items-center gap-2 sm:gap-3">
+          
+          {/* Active Creator Chip or Creator Login Trigger */}
+          {loggedInCreator ? (
+            <button
+              onClick={onOpenCreatorLogin}
+              className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-white hover:bg-neutral-50 border border-[#dfd5c4] shadow-sm transition-all text-xs"
+              title="Manage Creator Profile / Switch Persona"
+            >
+              <img 
+                src={loggedInCreator.avatar} 
+                alt={loggedInCreator.name} 
+                className="w-5 h-5 rounded-full object-cover border border-[#ff5522]"
+              />
+              <span className="hidden sm:inline text-black font-extrabold">{loggedInCreator.name.split(' ')[0]}</span>
+              <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+            </button>
+          ) : userRole === 'creator' && (
+            <button
+              onClick={onOpenCreatorLogin}
+              className="hidden sm:flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#ff5522]/10 hover:bg-[#ff5522]/20 border border-[#ff5522]/30 text-[#ff5522] text-xs font-bold transition-all"
+            >
+              <Sparkles className="w-3.5 h-3.5" />
+              <span>Sign In</span>
+            </button>
+          )}
+
           {/* Role Pill Switcher */}
           <div className="flex items-center bg-[#eae1d3] border border-[#d8cdbf] rounded-full p-1 text-xs">
             <button
@@ -150,7 +178,12 @@ export const Navbar = ({
               Brand
             </button>
             <button
-              onClick={() => setUserRole('creator')}
+              onClick={() => {
+                setUserRole('creator');
+                if (!loggedInCreator && onOpenCreatorLogin) {
+                  onOpenCreatorLogin();
+                }
+              }}
               className={`px-3 py-1 font-bold rounded-full transition-all ${
                 userRole === 'creator'
                   ? 'bg-black text-white shadow-sm'
@@ -161,18 +194,20 @@ export const Navbar = ({
             </button>
           </div>
 
-          {/* Black Pill CTA Button from Reference: "Register ↗" or "Post Brief ↗" */}
+          {/* Black Pill CTA Button from Reference: "Register / Log In ↗" or "Post Brief ↗" */}
           <button
             onClick={() => {
               if (userRole === 'brand') {
                 setActiveTab('brief-builder');
+              } else if (onOpenCreatorLogin) {
+                onOpenCreatorLogin();
               } else {
                 setActiveTab('briefs');
               }
             }}
             className="flex items-center gap-2 px-5 py-2.5 rounded-full bg-black hover:bg-neutral-900 text-white font-bold text-xs sm:text-sm shadow-md transition-transform hover:-translate-y-0.5 active:translate-y-0"
           >
-            <span>{userRole === 'brand' ? 'Post Brief' : 'Register'}</span>
+            <span>{userRole === 'brand' ? 'Post Brief' : loggedInCreator ? 'Creator Studio' : 'Register / Log In'}</span>
             <ArrowUpRight className="w-4 h-4 text-white" />
           </button>
 

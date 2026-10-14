@@ -10,6 +10,7 @@ import { BriefBuilderView } from './components/BriefBuilderView';
 import { BriefsBoardView } from './components/BriefsBoardView';
 import { DeliveryStudioView } from './components/DeliveryStudioView';
 import { BookCreatorModal } from './components/BookCreatorModal';
+import { CreatorLoginModal } from './components/CreatorLoginModal';
 import { HackathonDemoRoadmap } from './components/HackathonDemoRoadmap';
 import { WhereToNavigateNext } from './components/WhereToNavigateNext';
 
@@ -22,7 +23,9 @@ import {
   getStoredUserRole, 
   saveUserRoleToStorage, 
   getSavedCreators, 
-  toggleSaveCreator 
+  toggleSaveCreator,
+  getStoredLoggedInCreator,
+  saveLoggedInCreatorToStorage
 } from './utils/storage';
 
 import { 
@@ -51,6 +54,8 @@ export function App() {
   const [inspectingCreator, setInspectingCreator] = useState(null);
   const [bookingCreator, setBookingCreator] = useState(null);
   const [preloadedRecipeForBrief, setPreloadedRecipeForBrief] = useState(null);
+  const [loggedInCreator, setLoggedInCreator] = useState(getStoredLoggedInCreator());
+  const [isCreatorLoginOpen, setIsCreatorLoginOpen] = useState(false);
 
   // Filter States for 'explore' tab
   const [searchQuery, setSearchQuery] = useState('');
@@ -100,6 +105,23 @@ export function App() {
     setUserRole(newRole);
     saveUserRoleToStorage(newRole);
     showToast(`Switched perspective to ${newRole === 'brand' ? 'Indian Brand / Agency' : 'Indian AI Creator'} Mode`, 'info');
+  };
+
+  // Creator Account Auth Handlers
+  const handleLoginCreator = (creator) => {
+    setLoggedInCreator(creator);
+    saveLoggedInCreatorToStorage(creator);
+    setUserRole('creator');
+    saveUserRoleToStorage('creator');
+    showToast(`Signed in as ${creator.name} (Creator Studio) 🇮🇳`, 'success');
+  };
+
+  const handleLogoutCreator = () => {
+    setLoggedInCreator(null);
+    saveLoggedInCreatorToStorage(null);
+    setUserRole('brand');
+    saveUserRoleToStorage('brand');
+    showToast('Switched back to Brand Mode', 'info');
   };
 
   // Saved Creators Toggle
@@ -229,6 +251,8 @@ export function App() {
           userRole={userRole}
           setUserRole={handleSetUserRole}
           onOpenBriefModal={() => setActiveTab('brief-builder')}
+          loggedInCreator={loggedInCreator}
+          onOpenCreatorLogin={() => setIsCreatorLoginOpen(true)}
         />
 
         {/* Dynamic Role Banner */}
@@ -236,6 +260,8 @@ export function App() {
           userRole={userRole}
           setUserRole={handleSetUserRole}
           onActionClick={() => setActiveTab(userRole === 'brand' ? 'brief-builder' : 'briefs')}
+          loggedInCreator={loggedInCreator}
+          onOpenCreatorLogin={() => setIsCreatorLoginOpen(true)}
         />
 
         {/* Hackathon 5-Step Demo Roadmap & Navigation Stepper */}
@@ -700,6 +726,15 @@ export function App() {
             showToast(`Commission sent to ${bookingCreator?.name} with ₹ INR escrow lock!`, 'success');
             setActiveTab('delivery-room');
           }}
+        />
+
+        {/* CREATOR SIGN-IN & PERSONA SWITCHER MODAL */}
+        <CreatorLoginModal 
+          isOpen={isCreatorLoginOpen}
+          onClose={() => setIsCreatorLoginOpen(false)}
+          loggedInCreator={loggedInCreator}
+          onLoginCreator={handleLoginCreator}
+          onLogoutCreator={handleLogoutCreator}
         />
 
         {/* Footer */}

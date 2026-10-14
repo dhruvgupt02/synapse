@@ -7,7 +7,29 @@ const STORAGE_KEYS = {
   USER_ROLE: 'synapse_user_role_v1',
   SAVED_CREATORS: 'synapse_saved_creators_v1',
   PROPOSALS: 'synapse_proposals_v1',
-  CUSTOM_RECIPES: 'synapse_custom_recipes_v1'
+  CUSTOM_RECIPES: 'synapse_custom_recipes_v1',
+  LOGGED_IN_CREATOR: 'synapse_logged_in_creator_v1'
+};
+
+export const getStoredLoggedInCreator = () => {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEYS.LOGGED_IN_CREATOR);
+    return raw ? JSON.parse(raw) : null;
+  } catch (e) {
+    return null;
+  }
+};
+
+export const saveLoggedInCreatorToStorage = (creator) => {
+  try {
+    if (!creator) {
+      localStorage.removeItem(STORAGE_KEYS.LOGGED_IN_CREATOR);
+    } else {
+      localStorage.setItem(STORAGE_KEYS.LOGGED_IN_CREATOR, JSON.stringify(creator));
+    }
+  } catch (e) {
+    console.error('Failed to save logged-in creator', e);
+  }
 };
 
 export const getStoredBriefs = () => {
