@@ -380,7 +380,7 @@ export const RecipeModal = ({ recipe, creator, isOpen, onClose, onForkRecipe, on
                   {clearance.licenseTier}
                 </p>
                 <p className="text-[11px] text-zinc-500">
-                  Includes complete IP indemnity from Synapse Underwriting Guild. Creator transfers all synthetic production outputs and raw node JSON files upon milestone sign-off.
+                  Includes complete IP indemnity from Brivio Underwriting Guild. Creator transfers all synthetic production outputs and raw node JSON files upon milestone sign-off.
                 </p>
               </div>
 

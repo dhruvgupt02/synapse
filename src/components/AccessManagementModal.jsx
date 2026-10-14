@@ -102,7 +102,7 @@ export const AccessManagementModal = ({
               Role-Based Access Control & Dual-Key Escrow Governance
             </h2>
             <p className="text-xs text-zinc-400 font-medium">
-              SYNAPSE enforces strict cryptographic role separation between Brand Commissioners and AI Directors.
+              BRIVIO enforces strict cryptographic role separation between Brand Commissioners and AI Directors.
             </p>
           </div>
 
@@ -258,7 +258,7 @@ export const AccessManagementModal = ({
                   <span>Dual-Key Escrow Consensus Architecture (Why Creators Cannot Self-Approve)</span>
                 </div>
                 <p className="text-[11px] leading-relaxed text-amber-800 font-medium">
-                  Under the Indian Contract Act 1872 & RBI escrow regulations, funds locked in smart contract milestones can only be released upon unilateral sign-off by the funding principal (the Brand). If creators could authorize milestone payments to themselves, it would create an unmitigated conflict of interest. Synapse enforces this at both the UI layer (conditional button rendering) and API layer (403 Forbidden rejection).
+                  Under the Indian Contract Act 1872 & RBI escrow regulations, funds locked in smart contract milestones can only be released upon unilateral sign-off by the funding principal (the Brand). If creators could authorize milestone payments to themselves, it would create an unmitigated conflict of interest. Brivio enforces this at both the UI layer (conditional button rendering) and API layer (403 Forbidden rejection).
                 </p>
               </div>
             </div>

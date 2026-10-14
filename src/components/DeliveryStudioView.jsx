@@ -181,7 +181,7 @@ export const DeliveryStudioView = ({
   const handleDownloadC2paJson = () => {
     const manifest = {
       "@context": "https://c2pa.org/specifications/v2.0",
-      "claim_generator": "Synapse-C2PA-Engine/2.4",
+      "claim_generator": "Brivio-C2PA-Engine/2.4",
       "title": project.briefTitle,
       "project_id": project.id,
       "client": project.client,
@@ -246,7 +246,7 @@ export const DeliveryStudioView = ({
             </div>
           </div>
           <span className="px-3 py-1 rounded-full text-[11px] font-mono font-bold bg-[#ff5522]/20 text-[#ff5522] border border-[#ff5522]/30">
-            Synapse Protocol v2.4
+            Brivio Protocol v2.4
           </span>
         </div>
 
@@ -1030,7 +1030,7 @@ export const DeliveryStudioView = ({
               <div><strong>Asset Hash:</strong> SHA256: 8f92bd39a48f0291e9f029c7b94a821e</div>
               <div><strong>Generating Engine:</strong> {seedB.model}</div>
               <div><strong>Commercial Clearance:</strong> Clear-to-Air™ Grade A+ Full Commercial Indemnity</div>
-              <div><strong>Signing Authority:</strong> Synapse Protocol MeitY Compliance Node</div>
+              <div><strong>Signing Authority:</strong> Brivio Protocol MeitY Compliance Node</div>
             </div>
 
             <div className="flex justify-end gap-2">

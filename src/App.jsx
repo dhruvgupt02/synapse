@@ -131,7 +131,7 @@ export function App() {
       const saved = await registerCreatorAPI(creatorData);
       setCreators(prev => [saved, ...prev]);
       handleLoginCreator(saved);
-      showToast(`Welcome ${saved.name}! Your director profile is verified & live on Synapse India.`, 'success');
+      showToast(`Welcome ${saved.name}! Your director profile is verified & live on Brivio India.`, 'success');
     } catch (e) {
       setCreators(prev => [creatorData, ...prev]);
       handleLoginCreator(creatorData);
@@ -754,7 +754,7 @@ export function App() {
         <footer className="mt-auto border-t border-[#dfd5c4] bg-[#eae0d2]/70 py-6 text-xs text-neutral-600 px-5 sm:px-10">
           <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
             <div className="flex items-center gap-2 text-neutral-700">
-              <span className="font-display font-black text-black text-sm">SYNAPSE.</span>
+              <span className="font-display font-black text-black text-sm">BRIVIO.</span>
               <span className="font-medium">• The AI-Native Creative Marketplace for India 🇮🇳</span>
             </div>
 

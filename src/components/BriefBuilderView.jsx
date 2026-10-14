@@ -114,7 +114,7 @@ export const BriefBuilderView = ({ onPublishBrief, preloadedRecipe, onNavigate, 
 
     setIsDeconstructing(true);
     setDeconstructProgress(20);
-    setDeconstructStage('Dispatching to SYNAPSE Backend AI Engine...');
+    setDeconstructStage('Dispatching to BRIVIO Backend AI Engine...');
 
     setTimeout(() => {
       setDeconstructProgress(55);
@@ -142,7 +142,7 @@ export const BriefBuilderView = ({ onPublishBrief, preloadedRecipe, onNavigate, 
           if (d.aspectRatio) setAspectRatio(d.aspectRatio);
           if (d.mediaType) setMediaType(d.mediaType);
           if (d.budget) setBudget(d.budget);
-          setAiEngineUsed(response.engine || 'SYNAPSE Indian Creative Engine');
+          setAiEngineUsed(response.engine || 'BRIVIO Indian Creative Engine');
         } else {
           // Local fallback
           setTitle('Tanishq Rivaah: Royal Kundan Bridal Campaign');
@@ -156,7 +156,7 @@ export const BriefBuilderView = ({ onPublishBrief, preloadedRecipe, onNavigate, 
           ]);
           setSelectedTools(['Kling 1.5', 'ComfyUI', 'Midjourney v6.1', 'Topaz 4K']);
           setBudget('₹12,50,000');
-          setAiEngineUsed('SYNAPSE Indian Creative Engine (Heuristics)');
+          setAiEngineUsed('BRIVIO Indian Creative Engine (Heuristics)');
         }
 
         setTimeout(() => {
@@ -228,7 +228,7 @@ export const BriefBuilderView = ({ onPublishBrief, preloadedRecipe, onNavigate, 
       complianceTier: asciCompliantEnforced 
         ? 'ASCI Synthetic Disclosure • Clear-to-Air™ Certified (Full IP Indemnity)' 
         : 'Commercial Safe Tier B',
-      description: campaignIdea || 'Indian market creative campaign brief generated via Synapse AI Wizard.',
+      description: campaignIdea || 'Indian market creative campaign brief generated via Brivio AI Wizard.',
       styleTokens: styleTokens,
       licenseTier: licenseTier,
       proposalsCount: 0,
@@ -681,7 +681,7 @@ export const BriefBuilderView = ({ onPublishBrief, preloadedRecipe, onNavigate, 
                   {[
                     {
                       name: 'ASCI Synthetic Disclosure Certified • Enterprise Full Buyout',
-                      desc: 'Global exclusive rights in all media forever. IP indemnity backed by Synapse India.'
+                      desc: 'Global exclusive rights in all media forever. IP indemnity backed by Brivio India.'
                     },
                     {
                       name: 'India Digital & OTT 1-Year Buyout',

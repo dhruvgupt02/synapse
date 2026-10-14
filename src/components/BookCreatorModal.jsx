@@ -154,7 +154,7 @@ export const BookCreatorModal = ({ creator, recipe, isOpen, onClose, onBookingSu
             <div className="p-3 rounded-xl bg-zinc-950 border border-zinc-800 text-[11px] text-zinc-400 space-y-1">
               <div className="flex items-center gap-1.5 text-orange-400 font-semibold">
                 <Lock className="w-3.5 h-3.5" />
-                Synapse Escrow Milestone Protection
+                Brivio Escrow Milestone Protection
               </div>
               <p>
                 Funds remain safely held in smart escrow and are released only upon your interactive approval in the Seed Studio.

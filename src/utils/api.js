@@ -1,4 +1,4 @@
-// Client-side API integration for SYNAPSE India Backend
+// Client-side API integration for BRIVIO India Backend
 import { INITIAL_CREATORS, INITIAL_BRIEFS, INITIAL_DELIVERY_PROJECTS } from '../data/mockData';
 
 const API_BASE = '/api';

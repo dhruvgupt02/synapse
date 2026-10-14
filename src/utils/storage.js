@@ -1,4 +1,4 @@
-// LocalStorage management for SYNAPSE
+// LocalStorage management for BRIVIO
 import { INITIAL_BRIEFS, INITIAL_DELIVERY_PROJECTS } from '../data/mockData';
 
 const STORAGE_KEYS = {

@@ -1,4 +1,4 @@
-# SYNAPSE — AI-Native Creative Marketplace 🇮🇳
+# BRIVIO — AI-Native Creative Marketplace 🇮🇳
 
 > Connecting elite AI creators (filmmakers, animators, generative designers) with brands and agencies under **ASCI Synthetic Media Disclosure** and **Clear-to-Air™** certified enterprise standards.
 

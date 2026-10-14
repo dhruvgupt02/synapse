@@ -71,7 +71,7 @@ app.get('/api/health', (req, res) => {
 
   res.json({
     status: 'online',
-    platform: 'SYNAPSE India AI-Native Marketplace',
+    platform: 'BRIVIO India AI-Native Marketplace',
     version: '2.0.0',
     creatorsCount: db.creators.length,
     briefsCount: db.briefs.length,
@@ -152,7 +152,7 @@ app.post('/api/creators', (req, res) => {
         type: 'Commercial Film Stills & Video Sequences',
         image: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=800&q=80',
         duration: '0:30',
-        awards: 'Official Synapse Selection',
+        awards: 'Official Brivio Selection',
         views: '1.2k',
         tags: ['Kling 1.5', 'ComfyUI', '4K Anamorphic'],
         resolution: '4K ProRes 4444',
@@ -351,7 +351,7 @@ app.post('/api/delivery-projects/:id/approve', (req, res) => {
 
 app.get('/api/escrow/ledger', (req, res) => {
   res.json({
-    protocol: 'Synapse Clear-to-Air™ Smart Escrow Protocol',
+    protocol: 'Brivio Clear-to-Air™ Smart Escrow Protocol',
     jurisdiction: 'India (RBI / MeitY compliant smart contract escrow framework)',
     totalMarketplaceVolume: '₹1,24,00,000',
     totalLockedEscrow: '₹57,50,000',
@@ -391,7 +391,7 @@ app.post('/api/ai/deconstruct-brief', async (req, res) => {
               {
                 parts: [
                   {
-                    text: `You are the lead AI Creative Technologist at SYNAPSE India. Analyze this Indian brand commercial concept: "${promptText}".
+                    text: `You are the lead AI Creative Technologist at BRIVIO India. Analyze this Indian brand commercial concept: "${promptText}".
 Deconstruct it into a valid JSON object with:
 - "title": Compelling Indian campaign title
 - "styleTokens": array of 5-7 optical, lighting, and cultural tokens (e.g. "Kundan caustics", "anamorphic 35mm", "golden hour marble bounce", "zari micro-weave")
@@ -494,7 +494,7 @@ Return ONLY raw JSON, no markdown formatting.`
   }
 
   res.json({
-    engine: 'SYNAPSE Indian Creative Engine (Rule & Heuristics Intelligence)',
+    engine: 'BRIVIO Indian Creative Engine (Rule & Heuristics Intelligence)',
     apiKeyStatus: geminiKey ? 'Gemini Key Configured' : 'No Key Provided (Using Heuristics Engine)',
     data: {
       title,
@@ -541,6 +541,6 @@ app.post('/api/settings/keys', (req, res) => {
 });
 
 app.listen(PORT, () => {
-  console.log(`[SYNAPSE BACKEND] Server running on http://localhost:${PORT}`);
-  console.log(`[SYNAPSE BACKEND] Indian Creative Engine & ASCI Compliance Active.`);
+  console.log(`[BRIVIO BACKEND] Server running on http://localhost:${PORT}`);
+  console.log(`[BRIVIO BACKEND] Indian Creative Engine & ASCI Compliance Active.`);
 });

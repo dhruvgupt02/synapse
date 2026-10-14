@@ -99,7 +99,7 @@ export const ApiKeysModal = ({ isOpen, onClose, onKeysUpdated }) => {
             <span>No API Key Required by Default!</span>
           </div>
           <p className="text-zinc-300 text-[11px] leading-relaxed">
-            SYNAPSE includes a <strong>built-in Indian Creative Heuristics Engine</strong> that deconstructs campaigns into Indian cultural tokens, model stacks, and INR budgets automatically with zero setup.
+            BRIVIO includes a <strong>built-in Indian Creative Heuristics Engine</strong> that deconstructs campaigns into Indian cultural tokens, model stacks, and INR budgets automatically with zero setup.
           </p>
           <p className="text-zinc-400 text-[10px] pt-1">
             If you wish to use <strong>Live Generative AI</strong> via Google Gemini or OpenAI, you can optionally provide your key below or in your <code className="text-orange-300 bg-zinc-900 px-1 py-0.5 rounded">.env</code> file.

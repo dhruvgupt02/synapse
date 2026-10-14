@@ -1,4 +1,4 @@
-// Indian Context Mock Data for SYNAPSE AI Creative Marketplace
+// Indian Context Mock Data for BRIVIO AI Creative Marketplace
 
 export const INDIAN_CREATORS = [
   {
@@ -588,7 +588,7 @@ export const INDIAN_DELIVERY_PROJECTS = [
     milestoneNumber: 2,
     totalMilestones: 3,
     milestoneTitle: 'Milestone 2: Kundan Gemstone Caustics & Rajputana Courtyard Multi-Shot Continuity',
-    escrowAmount: '₹5,50,000 (Escrow Locked in Synapse Protocol)',
+    escrowAmount: '₹5,50,000 (Escrow Locked in Brivio Protocol)',
     status: 'Ready for Review',
     activeSeedA: {
       seedId: '#7829104821',
@@ -651,7 +651,7 @@ export const INDIAN_DELIVERY_PROJECTS = [
     milestoneNumber: 1,
     totalMilestones: 3,
     milestoneTitle: 'Milestone 1: Vehicle Rig Geometry ControlNet & Sand Drift Physics',
-    escrowAmount: '₹7,20,000 (Escrow Locked in Synapse Protocol)',
+    escrowAmount: '₹7,20,000 (Escrow Locked in Brivio Protocol)',
     status: 'Ready for Review',
     activeSeedA: {
       seedId: '#9931820194',
@@ -714,7 +714,7 @@ export const INDIAN_DELIVERY_PROJECTS = [
     milestoneNumber: 3,
     totalMilestones: 3,
     milestoneTitle: 'Milestone 3: Final ASCI Synthetic Watermark & Neo-Noir Film Halation',
-    escrowAmount: '₹3,80,000 (Escrow Locked in Synapse Protocol)',
+    escrowAmount: '₹3,80,000 (Escrow Locked in Brivio Protocol)',
     status: 'Ready for Review',
     activeSeedA: {
       seedId: '#4419208112',
