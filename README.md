@@ -19,7 +19,7 @@
 6. **The "Seed Board" Delivery & Revision Studio**: Milestone iteration environment featuring:
    - Interactive **Split Scrubber Slider** comparing Seed A vs Seed B
    - Visual inpainting / reroll coordinate feedback pins
-   - Version history prompt token diff viewer
+   - Version history prompt token diff viewer  
    - Milestone escrow approval and release workflow
 
 ---
