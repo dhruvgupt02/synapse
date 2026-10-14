@@ -23,6 +23,7 @@ import {
 } from 'lucide-react';
 import confetti from 'canvas-confetti';
 import { deconstructBriefAI } from '../utils/api';
+import { WhereToNavigateNext } from './WhereToNavigateNext';
 
 const INDIAN_PRESET_CAMPAIGNS = [
   {
@@ -63,7 +64,7 @@ const INDIAN_PRESET_CAMPAIGNS = [
   }
 ];
 
-export const BriefBuilderView = ({ onPublishBrief, preloadedRecipe }) => {
+export const BriefBuilderView = ({ onPublishBrief, preloadedRecipe, onNavigate }) => {
   const [currentStep, setCurrentStep] = useState(1);
   const [isDeconstructing, setIsDeconstructing] = useState(false);
   const [deconstructProgress, setDeconstructProgress] = useState(0);
@@ -901,6 +902,12 @@ export const BriefBuilderView = ({ onPublishBrief, preloadedRecipe }) => {
         </div>
 
       </div>
+
+      {/* Where to Navigate Next */}
+      <WhereToNavigateNext 
+        currentView="brief-builder" 
+        onNavigate={onNavigate || (() => {})} 
+      />
 
     </div>
   );

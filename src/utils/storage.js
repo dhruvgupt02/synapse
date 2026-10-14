@@ -43,7 +43,12 @@ export const getStoredDeliveryProjects = () => {
       localStorage.setItem(STORAGE_KEYS.DELIVERY_PROJECTS, JSON.stringify(INITIAL_DELIVERY_PROJECTS));
       return INITIAL_DELIVERY_PROJECTS;
     }
-    return JSON.parse(raw);
+    const parsed = JSON.parse(raw);
+    if (!Array.isArray(parsed) || parsed.length < INITIAL_DELIVERY_PROJECTS.length) {
+      localStorage.setItem(STORAGE_KEYS.DELIVERY_PROJECTS, JSON.stringify(INITIAL_DELIVERY_PROJECTS));
+      return INITIAL_DELIVERY_PROJECTS;
+    }
+    return parsed;
   } catch (e) {
     console.error('Failed to parse delivery projects from storage', e);
     return INITIAL_DELIVERY_PROJECTS;

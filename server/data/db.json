@@ -979,6 +979,166 @@
           "status": "Pending Milestone 2 Approval"
         }
       ]
+    },
+    {
+      "id": "delivery-proj-ind-2",
+      "briefTitle": "Mahindra Thar.e: Pangong Tso Extreme Terrain Cinematic Launch",
+      "client": "Mahindra & Mahindra Automotive",
+      "creator": "Ananya Sen",
+      "creatorAvatar": "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=400&q=80",
+      "milestoneNumber": 1,
+      "totalMilestones": 3,
+      "milestoneTitle": "Milestone 1: Vehicle Rig Geometry ControlNet & Sand Drift Physics",
+      "escrowAmount": "₹7,20,000 (Escrow Locked in Synapse Protocol)",
+      "status": "Ready for Review",
+      "activeSeedA": {
+        "seedId": "#9931820194",
+        "label": "Seed A (Baseline ControlNet v1.1)",
+        "model": "Runway Gen-3 Alpha + Depth ControlNet",
+        "cfg": 7.2,
+        "image": "https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?auto=format&fit=crop&w=1200&q=80",
+        "prompt": "high-speed tracking shot of electric 4x4 rugged concept vehicle drifting across salt flats of Ladakh, dramatic mountain peaks background, dust particles in sun rays, 60fps slow motion",
+        "notes": "Initial generation using Depth ControlNet. Tyre contact shadow floating slightly on uneven gravel."
+      },
+      "activeSeedB": {
+        "seedId": "#9931820195",
+        "label": "Seed B (Refined Anisotropic Lighting + Wheel Physics LoRA)",
+        "model": "Runway Gen-3 Alpha + Custom Thar CAD Mesh LoRA (0.92) + ComfyUI Particle Pass",
+        "cfg": 6.5,
+        "image": "https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=1200&q=80",
+        "prompt": "high-speed low angle tracking shot of electric 4x4 concept vehicle drifting across Ladakh salt flats, locked CAD chassis geometry, hyper-realistic gravel displacement, Pangong blue lake reflection on hood, golden hour rim lighting, ARRI Alexa LF 65mm anamorphic",
+        "notes": "Locked chassis geometry with custom Mahindra Thar LoRA at 0.92 weight and added particle spray displacement pass."
+      },
+      "promptDiff": {
+        "v1": "high-speed tracking shot of electric 4x4 rugged concept vehicle drifting across salt flats of Ladakh, dramatic mountain peaks background, dust particles in sun rays, 60fps slow motion",
+        "v2": "high-speed low angle tracking shot of electric 4x4 concept vehicle drifting across Ladakh salt flats, locked CAD chassis geometry, hyper-realistic gravel displacement, Pangong blue lake reflection on hood, golden hour rim lighting, ARRI Alexa LF 65mm anamorphic",
+        "addedTokens": [
+          "low angle tracking shot",
+          "locked CAD chassis geometry",
+          "hyper-realistic gravel displacement",
+          "Pangong blue lake reflection on hood",
+          "ARRI Alexa LF 65mm anamorphic"
+        ],
+        "removedTokens": [
+          "60fps slow motion",
+          "dust particles in sun rays"
+        ]
+      },
+      "feedbackPins": [
+        {
+          "id": "pin-m1",
+          "x": 52,
+          "y": 62,
+          "user": "Tarun Mehta (Brand Lead, Mahindra EV)",
+          "avatar": "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&w=100&q=80",
+          "comment": "Wheel contact shadow is now completely grounded! The tire tread pattern matches our production prototype perfectly.",
+          "status": "Resolved",
+          "createdAt": "2 hours ago"
+        },
+        {
+          "id": "pin-m2",
+          "x": 74,
+          "y": 40,
+          "user": "Shalini Verma (Creative Supervisor, Ogilvy India)",
+          "avatar": "https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&w=100&q=80",
+          "comment": "Inpaint request: brighten the cyan LED signature light on the front grille by 10% so it cuts through the dust haze.",
+          "status": "Pending Inpaint",
+          "createdAt": "45 mins ago"
+        }
+      ],
+      "history": [
+        {
+          "version": "v1.0 (CAD Wireframe Match)",
+          "date": "4 days ago",
+          "status": "Approved"
+        },
+        {
+          "version": "v2.0 (Dynamic Particle Pass)",
+          "date": "Today",
+          "status": "Current Review"
+        },
+        {
+          "version": "v3.0 (Sound Design Sync & C2PA)",
+          "date": "Upcoming",
+          "status": "Pending Milestone 1 Approval"
+        }
+      ]
+    },
+    {
+      "id": "delivery-proj-ind-3",
+      "briefTitle": "CRED: 90s Mumbai Monsoon Neo-Noir 30s Commercial",
+      "client": "CRED (Dreamplug Technologies)",
+      "creator": "Rohan Deshmukh",
+      "creatorAvatar": "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=400&q=80",
+      "milestoneNumber": 3,
+      "totalMilestones": 3,
+      "milestoneTitle": "Milestone 3: Final ASCI Synthetic Watermark & Neo-Noir Film Halation",
+      "escrowAmount": "₹3,80,000 (Escrow Locked in Synapse Protocol)",
+      "status": "Ready for Review",
+      "activeSeedA": {
+        "seedId": "#4419208112",
+        "label": "Seed A (Midjourney v6.1 Baseline)",
+        "model": "Midjourney v6.1 + Luma Dream Machine",
+        "cfg": 6,
+        "image": "https://images.unsplash.com/photo-1514565131-fce0801e5785?auto=format&fit=crop&w=1200&q=80",
+        "prompt": "retro 90s cinematic film still, rainy night on Mumbai Marine Drive, vintage premier padmini taxi passing, neon reflection on wet asphalt, Wong Kar-Wai mood, 35mm film grain",
+        "notes": "Initial generation with baseline film mood. Neon reflections were slightly over-saturated."
+      },
+      "activeSeedB": {
+        "seedId": "#4419208113",
+        "label": "Seed B (Refined 90s Bollywood Halation + ASCI Watermark)",
+        "model": "Midjourney v6.1 + Custom Neo-Bombay LoRA + ASCI C2PA Node",
+        "cfg": 5.5,
+        "image": "https://images.unsplash.com/photo-1509198397868-475647b2a1e5?auto=format&fit=crop&w=1200&q=80",
+        "prompt": "retro 90s cinematic film still, moody monsoon downpour on Mumbai Marine Drive, vintage premier padmini taxi with authentic chrome bumper, soft green and amber neon signage reflected in puddles, Wong Kar-Wai step-printing motion blur, Fuji 500T grain, subtle ASCI synthetic media disclaimer",
+        "notes": "Tuned neon color grading with authentic Fuji 500T grain simulation and compliant ASCI synthetic disclosure embedded."
+      },
+      "promptDiff": {
+        "v1": "retro 90s cinematic film still, rainy night on Mumbai Marine Drive, vintage premier padmini taxi passing, neon reflection on wet asphalt, Wong Kar-Wai mood, 35mm film grain",
+        "v2": "retro 90s cinematic film still, moody monsoon downpour on Mumbai Marine Drive, vintage premier padmini taxi with authentic chrome bumper, soft green and amber neon signage reflected in puddles, Wong Kar-Wai step-printing motion blur, Fuji 500T grain, subtle ASCI synthetic media disclaimer",
+        "addedTokens": [
+          "moody monsoon downpour",
+          "authentic chrome bumper",
+          "soft green and amber neon signage reflected in puddles",
+          "step-printing motion blur",
+          "Fuji 500T grain",
+          "subtle ASCI synthetic media disclaimer"
+        ],
+        "removedTokens": [
+          "rainy night",
+          "neon reflection on wet asphalt",
+          "35mm film grain"
+        ]
+      },
+      "feedbackPins": [
+        {
+          "id": "pin-c1",
+          "x": 60,
+          "y": 45,
+          "user": "Kunal Shah (Founder, CRED)",
+          "avatar": "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=100&q=80",
+          "comment": "The nostalgic 90s Mumbai aesthetic is spot on! Love the amber neon glow on the vintage taxi hood.",
+          "status": "Resolved",
+          "createdAt": "3 hours ago"
+        }
+      ],
+      "history": [
+        {
+          "version": "v1.0 (Moodboard & Sound Anchor)",
+          "date": "5 days ago",
+          "status": "Approved"
+        },
+        {
+          "version": "v2.0 (Monsoon Lighting Pass)",
+          "date": "2 days ago",
+          "status": "Approved"
+        },
+        {
+          "version": "v3.0 (Final ASCI & C2PA Master)",
+          "date": "Today",
+          "status": "Ready for Escrow Release"
+        }
+      ]
     }
   ],
   "apiKeys": {

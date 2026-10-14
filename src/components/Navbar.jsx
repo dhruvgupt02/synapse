@@ -7,7 +7,6 @@ import {
   Briefcase, 
   Sliders, 
   ShieldCheck, 
-  Key, 
   ArrowUpRight,
   ChevronDown,
   Menu,
@@ -19,9 +18,7 @@ export const Navbar = ({
   setActiveTab, 
   userRole, 
   setUserRole, 
-  onOpenBriefModal,
-  onOpenKeysModal,
-  hasApiKey
+  onOpenBriefModal
 }) => {
   const [isCategoryMenuOpen, setIsCategoryMenuOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -140,18 +137,6 @@ export const Navbar = ({
 
         {/* Right Action Tools: Role Switcher, AI Key, Register/Post Brief Button */}
         <div className="flex items-center gap-2.5 sm:gap-3.5">
-          
-          {/* AI Engine Status Button */}
-          <button
-            onClick={onOpenKeysModal}
-            className="flex items-center gap-1.5 px-3 py-2 text-xs font-bold rounded-full bg-white/80 hover:bg-white text-neutral-800 border border-[#dfd5c4] shadow-sm transition-all"
-            title="Configure AI API Keys (Gemini/OpenAI) or check Backend Server status"
-          >
-            <Key className="w-3.5 h-3.5 text-[#ff5522]" />
-            <span className="hidden sm:inline">AI Keys</span>
-            <span className="w-2 h-2 rounded-full bg-emerald-500" />
-          </button>
-
           {/* Role Pill Switcher */}
           <div className="flex items-center bg-[#eae1d3] border border-[#d8cdbf] rounded-full p-1 text-xs">
             <button

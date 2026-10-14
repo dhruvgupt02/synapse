@@ -18,12 +18,14 @@ import {
   Users
 } from 'lucide-react';
 import confetti from 'canvas-confetti';
+import { WhereToNavigateNext } from './WhereToNavigateNext';
 
 export const BriefsBoardView = ({ 
   briefs, 
   userRole, 
   onOpenBriefBuilder, 
-  onOpenDeliveryStudio 
+  onOpenDeliveryStudio,
+  onNavigate
 }) => {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('All');
@@ -291,6 +293,12 @@ export const BriefsBoardView = ({
           </div>
         ))}
       </div>
+
+      {/* Where to Navigate Next */}
+      <WhereToNavigateNext 
+        currentView="briefs" 
+        onNavigate={onNavigate || (() => {})} 
+      />
 
       {/* PITCH MODAL FOR CREATORS */}
       {selectedBriefForPitch && (

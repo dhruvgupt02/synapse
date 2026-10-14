@@ -23,7 +23,12 @@ function loadDB() {
   try {
     if (fs.existsSync(DB_FILE)) {
       const raw = fs.readFileSync(DB_FILE, 'utf-8');
-      return JSON.parse(raw);
+      const data = JSON.parse(raw);
+      if (!data.deliveryProjects || data.deliveryProjects.length < INDIAN_DELIVERY_PROJECTS.length) {
+        data.deliveryProjects = INDIAN_DELIVERY_PROJECTS;
+        saveDB(data);
+      }
+      return data;
     }
   } catch (err) {
     console.error('Error reading db.json, re-initializing:', err);

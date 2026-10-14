@@ -10,7 +10,8 @@ import { BriefBuilderView } from './components/BriefBuilderView';
 import { BriefsBoardView } from './components/BriefsBoardView';
 import { DeliveryStudioView } from './components/DeliveryStudioView';
 import { BookCreatorModal } from './components/BookCreatorModal';
-import { ApiKeysModal } from './components/ApiKeysModal';
+import { HackathonDemoRoadmap } from './components/HackathonDemoRoadmap';
+import { WhereToNavigateNext } from './components/WhereToNavigateNext';
 
 import { INITIAL_CREATORS } from './data/mockData';
 import { 
@@ -28,11 +29,10 @@ import {
   fetchCreators, 
   fetchBriefs, 
   fetchDeliveryProjects, 
-  createBrief, 
-  getApiKeysStatus 
+  createBrief
 } from './utils/api';
 
-import { Sparkles, ShieldCheck, Zap, ArrowRight, Film, CheckCircle2, Award, Key, Globe, Grid } from 'lucide-react';
+import { Sparkles, ShieldCheck, Zap, ArrowRight, Film, CheckCircle2, Award, Globe, Grid } from 'lucide-react';
 
 export function App() {
   // Navigation & Role State
@@ -51,8 +51,6 @@ export function App() {
   const [inspectingCreator, setInspectingCreator] = useState(null);
   const [bookingCreator, setBookingCreator] = useState(null);
   const [preloadedRecipeForBrief, setPreloadedRecipeForBrief] = useState(null);
-  const [isKeysModalOpen, setIsKeysModalOpen] = useState(false);
-  const [hasApiKey, setHasApiKey] = useState(false);
 
   // Filter States for 'explore' tab
   const [searchQuery, setSearchQuery] = useState('');
@@ -92,9 +90,6 @@ export function App() {
       if (serverProjects && serverProjects.length > 0) {
         setDeliveryProjects(serverProjects);
       }
-
-      const keyStatus = await getApiKeysStatus();
-      setHasApiKey(Boolean(keyStatus.hasGeminiKey || keyStatus.hasOpenaiKey));
     } catch (e) {
       console.warn('Backend sync error, using local state:', e);
     }
@@ -227,12 +222,13 @@ export function App() {
         {/* Top Navbar */}
         <Navbar 
           activeTab={activeTab}
-          setActiveTab={setActiveTab}
+          setActiveTab={(tab) => {
+            setActiveTab(tab);
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+          }}
           userRole={userRole}
           setUserRole={handleSetUserRole}
           onOpenBriefModal={() => setActiveTab('brief-builder')}
-          onOpenKeysModal={() => setIsKeysModalOpen(true)}
-          hasApiKey={hasApiKey}
         />
 
         {/* Dynamic Role Banner */}
@@ -240,6 +236,20 @@ export function App() {
           userRole={userRole}
           setUserRole={handleSetUserRole}
           onActionClick={() => setActiveTab(userRole === 'brand' ? 'brief-builder' : 'briefs')}
+        />
+
+        {/* Hackathon 5-Step Demo Roadmap & Navigation Stepper */}
+        <HackathonDemoRoadmap 
+          activeTab={activeTab}
+          setActiveTab={(tab) => {
+            setActiveTab(tab);
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+          }}
+          onInspectDemoRecipe={() => {
+            const aarav = INITIAL_CREATORS[0];
+            const recipe = aarav?.portfolio?.[0]?.recipe || aarav?.featuredRecipe;
+            handleInspectRecipe(recipe, aarav);
+          }}
         />
 
         {/* Toast Notification Floating */}
@@ -594,6 +604,20 @@ export function App() {
                     onSelectCreator={handleSelectCreator}
                   />
                 )}
+
+                {/* Where to Navigate Next */}
+                <WhereToNavigateNext 
+                  currentView="explore"
+                  onNavigate={(tab) => {
+                    setActiveTab(tab);
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                  }}
+                  onInspectRecipe={() => {
+                    const aarav = INITIAL_CREATORS[0];
+                    const recipe = aarav?.portfolio?.[0]?.recipe || aarav?.featuredRecipe;
+                    handleInspectRecipe(recipe, aarav);
+                  }}
+                />
               </div>
 
             </div>
@@ -608,6 +632,10 @@ export function App() {
               onBookCreator={(c) => handleOpenBooking(c)}
               isSaved={savedCreatorIds.includes(selectedCreator?.id)}
               onToggleSave={handleToggleSave}
+              onNavigate={(tab) => {
+                setActiveTab(tab);
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+              }}
             />
           )}
 
@@ -616,6 +644,10 @@ export function App() {
             <BriefBuilderView 
               onPublishBrief={handlePublishBrief}
               preloadedRecipe={preloadedRecipeForBrief}
+              onNavigate={(tab) => {
+                setActiveTab(tab);
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+              }}
             />
           )}
 
@@ -626,6 +658,10 @@ export function App() {
               userRole={userRole}
               onOpenBriefBuilder={() => setActiveTab('brief-builder')}
               onOpenDeliveryStudio={(brief) => setActiveTab('delivery-room')}
+              onNavigate={(tab) => {
+                setActiveTab(tab);
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+              }}
             />
           )}
 
@@ -635,6 +671,10 @@ export function App() {
               userRole={userRole}
               deliveryProjects={deliveryProjects}
               onUpdateProjects={(updated) => setDeliveryProjects(updated)}
+              onNavigate={(tab) => {
+                setActiveTab(tab);
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+              }}
             />
           )}
 
@@ -659,16 +699,6 @@ export function App() {
           onBookingSuccess={() => {
             showToast(`Commission sent to ${bookingCreator?.name} with ₹ INR escrow lock!`, 'success');
             setActiveTab('delivery-room');
-          }}
-        />
-
-        {/* AI KEYS & BACKEND SETTINGS MODAL */}
-        <ApiKeysModal 
-          isOpen={isKeysModalOpen}
-          onClose={() => setIsKeysModalOpen(false)}
-          onKeysUpdated={() => {
-            loadBackendData();
-            showToast('AI engine settings updated!', 'success');
           }}
         />
 

@@ -22,13 +22,16 @@ import {
   Download
 } from 'lucide-react';
 
+import { WhereToNavigateNext } from './WhereToNavigateNext';
+
 export const CreatorProfileView = ({ 
   creator, 
   onBack, 
   onInspectRecipe, 
   onBookCreator, 
   isSaved, 
-  onToggleSave 
+  onToggleSave,
+  onNavigate
 }) => {
   const [activePortfolioTab, setActivePortfolioTab] = useState('all');
 
@@ -341,6 +344,12 @@ export const CreatorProfileView = ({
           ))}
         </div>
       </div>
+
+      {/* Where to Navigate Next */}
+      <WhereToNavigateNext 
+        currentView="profile" 
+        onNavigate={onNavigate || (() => {})} 
+      />
 
     </div>
   );
