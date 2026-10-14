@@ -2,19 +2,20 @@
 
 @layer base {
   :root {
-    --font-display: 'Syne', 'Plus Jakarta Sans', sans-serif;
-    --font-sans: 'Plus Jakarta Sans', sans-serif;
+    --font-display: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
     --font-mono: 'JetBrains Mono', monospace;
   }
 
   body {
     font-family: var(--font-sans);
-    background-color: #1e1510;
+    background-color: #f6f3ee;
     color: #181513;
   }
 
   h1, h2, h3, .font-display {
     font-family: var(--font-display);
+    letter-spacing: -0.025em;
   }
 
   code, pre, .font-mono {
@@ -22,42 +23,25 @@
   }
 }
 
-/* Tactile Paper Texture & Crumple Creases */
+/* Clean, Modern Enterprise Studio Surface */
 .paper-canvas {
-  background-color: #f2ebe0;
-  background-image: 
-    radial-gradient(at 0% 0%, rgba(255, 255, 255, 0.45) 0px, transparent 50%),
-    radial-gradient(at 100% 0%, rgba(230, 218, 202, 0.5) 0px, transparent 50%),
-    radial-gradient(at 100% 100%, rgba(220, 206, 190, 0.6) 0px, transparent 50%),
-    radial-gradient(at 0% 100%, rgba(245, 238, 228, 0.5) 0px, transparent 50%),
-    linear-gradient(135deg, rgba(0,0,0,0.02) 25%, transparent 25%),
-    linear-gradient(225deg, rgba(0,0,0,0.02) 25%, transparent 25%);
+  background-color: #faf7f2;
   box-shadow: 
-    0 25px 60px -15px rgba(0, 0, 0, 0.65),
-    0 0 0 1px rgba(0, 0, 0, 0.25),
-    inset 0 0 80px rgba(180, 160, 130, 0.18);
+    0 20px 60px -15px rgba(25, 20, 15, 0.08),
+    0 0 0 1px rgba(0, 0, 0, 0.05);
   position: relative;
 }
 
-/* Authentic Paper Crease Fold Lines Overlay */
+/* Remove fake paper crease overlay for clean real product look */
 .paper-crease-overlay {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  background: 
-    linear-gradient(108deg, transparent 48.5%, rgba(0,0,0,0.035) 49.5%, rgba(255,255,255,0.08) 50%, rgba(0,0,0,0.04) 51%, transparent 52%),
-    linear-gradient(172deg, transparent 65%, rgba(0,0,0,0.04) 66%, rgba(255,255,255,0.07) 66.5%, transparent 68%),
-    linear-gradient(28deg, transparent 32%, rgba(0,0,0,0.03) 33%, rgba(255,255,255,0.06) 33.5%, transparent 35%),
-    linear-gradient(142deg, transparent 78%, rgba(0,0,0,0.025) 79%, rgba(255,255,255,0.05) 79.5%, transparent 81%);
-  mix-blend-mode: multiply;
-  z-index: 1;
+  display: none;
 }
 
 /* Paper Card Styles */
 .paper-card {
   background: #ffffff;
   border: 1px solid #e7ded0;
-  box-shadow: 0 4px 20px -2px rgba(45, 30, 20, 0.06);
+  box-shadow: 0 4px 20px -2px rgba(45, 30, 20, 0.04);
 }
 
 .paper-card-dark {

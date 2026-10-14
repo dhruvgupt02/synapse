@@ -35,9 +35,9 @@ export const Navbar = ({
           className="flex items-center gap-2 cursor-pointer select-none group" 
           onClick={() => setActiveTab('explore')}
         >
-          <span className="font-display font-black text-2xl sm:text-3xl tracking-tight text-black flex items-center">
+          <span className="font-display font-extrabold text-2xl sm:text-3xl tracking-tight text-neutral-900 flex items-center">
             BRIVIO
-            <span className="inline-block w-2.5 h-2.5 ml-1 bg-[#ff5522] rounded-sm group-hover:scale-125 transition-transform" />
+            <span className="inline-block w-2 h-2 ml-1 bg-[#ff5522] rounded-full group-hover:scale-125 transition-transform" />
           </span>
           <span className="hidden sm:inline-flex items-center px-2 py-0.5 text-[10px] font-bold uppercase rounded bg-[#ff5522]/10 text-[#ff5522] border border-[#ff5522]/20">
             India 🇮🇳

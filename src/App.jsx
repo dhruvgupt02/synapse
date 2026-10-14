@@ -249,11 +249,10 @@ export function App() {
   };
 
   return (
-    <div className="min-h-screen bg-[#1c120c] p-2 sm:p-5 md:p-8 flex justify-center items-start font-sans selection:bg-[#ff5522] selection:text-white">
+    <div className="min-h-screen bg-[#f3efe8] p-2 sm:p-5 md:p-8 flex justify-center items-start font-sans selection:bg-[#ff5522] selection:text-white">
       
-      {/* Outer Paper Canvas Container */}
-      <div className="w-full max-w-[1420px] paper-canvas rounded-[24px] sm:rounded-[36px] overflow-hidden border border-[#d8ccbb]/70 shadow-2xl relative flex flex-col min-h-[96vh]">
-        <div className="paper-crease-overlay" />
+      {/* Outer Enterprise Studio Canvas */}
+      <div className="w-full max-w-[1420px] paper-canvas rounded-[24px] sm:rounded-[36px] overflow-hidden border border-[#d8ccbb]/80 shadow-2xl relative flex flex-col min-h-[96vh]">
 
         {/* Top Navbar */}
         <Navbar 
@@ -295,64 +294,54 @@ export function App() {
           {activeTab === 'explore' && (
             <div className="space-y-12 animate-fadeIn">
               
-              {/* HERO SECTION MATCHING REFERENCE IMAGE */}
+              {/* HERO SECTION: SOPHISTICATED ENTERPRISE HEADLINE */}
               <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center pt-2 pb-6">
                 
-                {/* Left Column: Bold Neo-Grotesque Display Title + Segmented Orange Button */}
+                {/* Left Column: Clean High-Conversion Headline & Subtext */}
                 <div className="lg:col-span-7 space-y-6">
                   
-                  {/* Headline: CONTENT [:::] THAT BUILDS INFLUENCE */}
-                  <div className="space-y-1">
-                    <div className="flex items-start">
-                      <h1 className="font-display font-black text-5xl sm:text-7xl lg:text-[5.5rem] tracking-tight leading-[0.92] text-black uppercase select-none">
-                        CONTENT
-                      </h1>
-                      {/* Orange Dot Matrix Grid */}
-                      <div className="inline-grid grid-cols-4 gap-1 p-1 ml-4 mt-2 bg-[#ff5522]/10 rounded border border-[#ff5522]/20">
-                        {Array.from({ length: 16 }).map((_, i) => (
-                          <span key={i} className="w-1.5 h-1.5 rounded-[1px] bg-[#ff5522]" />
-                        ))}
-                      </div>
+                  <div className="space-y-4">
+                    <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#ff5522]/10 border border-[#ff5522]/20 text-[#ff5522] text-xs font-bold uppercase tracking-wider">
+                      <span className="w-2 h-2 rounded-full bg-[#ff5522] animate-pulse" />
+                      Commercial AI Creative Operations • India 🇮🇳
                     </div>
-                    
-                    <h1 className="font-display font-black text-5xl sm:text-7xl lg:text-[5.5rem] tracking-tight leading-[0.92] text-black uppercase select-none">
-                      THAT BUILDS
+
+                    <h1 className="font-display font-extrabold text-4xl sm:text-6xl lg:text-[4.75rem] tracking-tight leading-[1.04] text-neutral-900 select-none">
+                      COMMERCIAL AI <br className="hidden sm:inline" />
+                      <span className="text-[#ff5522]">PRODUCTION</span> & <br className="hidden sm:inline" />
+                      SMART ESCROW.
                     </h1>
-                    <h1 className="font-display font-black text-5xl sm:text-7xl lg:text-[5.5rem] tracking-tight leading-[0.92] text-black uppercase select-none">
-                      INFLUENCE
-                    </h1>
+
+                    <p className="text-sm sm:text-base font-medium text-neutral-600 max-w-xl leading-relaxed">
+                      Connect with verified Indian generative filmmakers and AI directors under <strong>ASCI Synthetic Media Disclosure</strong>, inspectable model recipes, and milestone-locked ₹ INR escrow protection.
+                    </p>
                   </div>
 
-                  {/* Segmented Button + Editorial Subtext */}
-                  <div className="flex flex-wrap items-center gap-6 pt-2">
+                  {/* Clean, Modern Enterprise Actions */}
+                  <div className="flex flex-wrap items-center gap-4 pt-2">
                     <button 
                       onClick={() => setActiveTab('brief-builder')}
-                      className="btn-segmented group shadow-lg shadow-[#ff5522]/30"
+                      className="flex items-center gap-2.5 px-7 py-3.5 rounded-full bg-[#ff5522] hover:bg-[#e04413] text-white text-sm sm:text-base font-bold shadow-lg shadow-[#ff5522]/25 transition-all hover:scale-[1.02] active:scale-[0.98]"
                     >
-                      <span className="px-7 py-4 text-sm sm:text-base font-extrabold tracking-tight">
-                        Start Creating
-                      </span>
-                      <span className="bg-[#e24413] px-4 py-4 flex items-center justify-center border-l border-white/20">
-                        <div className="grid grid-cols-2 gap-1">
-                          <span className="w-1.5 h-1.5 rounded-full bg-white" />
-                          <span className="w-1.5 h-1.5 rounded-full bg-white" />
-                          <span className="w-1.5 h-1.5 rounded-full bg-white" />
-                          <span className="w-1.5 h-1.5 rounded-full bg-white" />
-                        </div>
-                      </span>
+                      <Sparkles className="w-4 h-4" />
+                      <span>Commission a Campaign</span>
                     </button>
 
-                    <p className="text-xs sm:text-sm font-semibold text-neutral-800 leading-tight">
-                      Create high-quality<br />
-                      content, collaborate<br />
-                      with community
-                    </p>
+                    <button 
+                      onClick={() => {
+                        const el = document.getElementById('marketplace-creators');
+                        if (el) el.scrollIntoView({ behavior: 'smooth' });
+                      }}
+                      className="flex items-center gap-2 px-6 py-3.5 rounded-full bg-white hover:bg-neutral-50 text-neutral-800 border border-[#dfd5c4] text-sm font-bold shadow-sm transition-all hover:border-black/30"
+                    >
+                      <span>Explore AI Directors ↗</span>
+                    </button>
                   </div>
                 </div>
 
-                {/* Right Column: Fashion Creator Card with CREATOR + PLATFORM & Rotating Stamp */}
+                {/* Right Column: Fashion Creator Card with Clean Verified Badge */}
                 <div className="lg:col-span-5 flex justify-center lg:justify-end">
-                  <div className="relative w-full max-w-[380px] sm:max-w-[420px] rounded-[32px] overflow-visible bg-white p-3.5 shadow-2xl border border-[#e2d7c9]">
+                  <div className="relative w-full max-w-[380px] sm:max-w-[420px] rounded-[32px] overflow-visible bg-white p-3.5 shadow-xl border border-[#e2d7c9]">
                     
                     {/* Creator Photo */}
                     <div className="relative rounded-[24px] overflow-hidden bg-[#faf6f0] aspect-[4/4.5]">
@@ -363,33 +352,24 @@ export function App() {
                       />
                       
                       {/* Dark Bottom Badge on Card: CREATOR + PLATFORM */}
-                      <div className="absolute bottom-3 left-3 bg-black text-white px-5 py-3 rounded-2xl flex flex-col shadow-lg z-10">
-                        <span className="font-display font-black text-sm tracking-widest uppercase">
-                          CREATOR +
+                      <div className="absolute bottom-3 left-3 bg-black/90 backdrop-blur-md text-white px-4 py-2.5 rounded-2xl flex flex-col shadow-lg z-10 border border-white/10">
+                        <span className="font-display font-extrabold text-xs tracking-wider uppercase">
+                          AI Director Showcase
                         </span>
-                        <span className="font-display font-black text-xs tracking-wider text-neutral-300 uppercase">
-                          PLATFORM
+                        <span className="text-[10px] text-neutral-400 font-mono">
+                          Kling 1.5 • ComfyUI • 4K
                         </span>
                       </div>
                     </div>
 
-                    {/* Attached Rotating Circular Badge Stamp */}
-                    <div className="absolute -bottom-4 -right-4 w-28 h-28 sm:w-32 sm:h-32 flex items-center justify-center pointer-events-none z-20">
-                      <svg className="w-full h-full animate-spin-slow" viewBox="0 0 100 100">
-                        <path
-                          id="stampCirclePath"
-                          d="M 50, 50 m -37, 0 a 37,37 0 1,1 74,0 a 37,37 0 1,1 -74,0"
-                          fill="none"
-                        />
-                        <text className="text-[8.2px] font-mono font-black uppercase tracking-[2.6px] fill-black">
-                          <textPath href="#stampCirclePath" startOffset="0%">
-                            • NEW RECIPES DAILY • NEW RECIPES DAILY
-                          </textPath>
-                        </text>
-                      </svg>
-                      {/* Center Circle with Globe / Sparkles */}
-                      <div className="absolute w-12 h-12 rounded-full bg-black flex items-center justify-center shadow-lg border-2 border-white">
-                        <Globe className="w-6 h-6 text-[#38bdf8] animate-pulse" />
+                    {/* Certified Commercial Director Badge */}
+                    <div className="absolute -bottom-3 -right-2 sm:right-2 px-4 py-3 rounded-2xl bg-white border border-[#dfd5c4] shadow-xl flex items-center gap-3 z-20">
+                      <div className="w-9 h-9 rounded-xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-600">
+                        <ShieldCheck className="w-5 h-5" />
+                      </div>
+                      <div>
+                        <div className="text-xs font-bold text-neutral-900 leading-tight">Clear-to-Air™ Certified</div>
+                        <div className="text-[10px] font-mono text-neutral-500 mt-0.5">C2PA Provenance Grade A+</div>
                       </div>
                     </div>
 
@@ -397,6 +377,7 @@ export function App() {
                 </div>
 
               </div>
+
 
               {/* HORIZONTAL FEATURE ROW MATCHING REFERENCE IMAGE */}
               <div className="pt-6 border-t border-[#dfd5c4] space-y-6">
@@ -574,7 +555,7 @@ export function App() {
               <div id="marketplace-creators" className="pt-8 space-y-6">
                 <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 border-b border-[#dfd5c4] pb-4">
                   <div>
-                    <h2 className="font-display font-black text-2xl sm:text-3xl text-black uppercase tracking-tight">
+                    <h2 className="font-display font-extrabold text-2xl sm:text-3xl text-neutral-900 tracking-tight">
                       Curated AI Creators & Recipe Portfolios
                     </h2>
                     <p className="text-xs sm:text-sm text-neutral-600 font-medium">
@@ -754,7 +735,7 @@ export function App() {
         <footer className="mt-auto border-t border-[#dfd5c4] bg-[#eae0d2]/70 py-6 text-xs text-neutral-600 px-5 sm:px-10">
           <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
             <div className="flex items-center gap-2 text-neutral-700">
-              <span className="font-display font-black text-black text-sm">BRIVIO.</span>
+              <span className="font-display font-extrabold text-neutral-900 text-sm">BRIVIO.</span>
               <span className="font-medium">• The AI-Native Creative Marketplace for India 🇮🇳</span>
             </div>
 
