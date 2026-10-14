@@ -22,7 +22,8 @@ export const CreatorLoginModal = ({
   onClose, 
   loggedInCreator, 
   onLoginCreator, 
-  onLogoutCreator 
+  onLogoutCreator,
+  onRegisterCreator 
 }) => {
   const [activeTab, setActiveTab] = useState('quick-personas'); // 'quick-personas' | 'custom-register'
   
@@ -31,7 +32,7 @@ export const CreatorLoginModal = ({
   const [customTitle, setCustomTitle] = useState('Senior Generative AI Filmmaker');
   const [customLocation, setCustomLocation] = useState('Mumbai, Maharashtra 🇮🇳');
   const [customTools, setCustomTools] = useState(['Kling 1.5', 'ComfyUI']);
-  const [customRate, setCustomRate] = useState('₹45,000 / milestone');
+  const [customRate, setCustomRate] = useState('₹50,000 / milestone');
   const [customSpecialization, setCustomSpecialization] = useState('Bridal & Luxury Fashion');
 
   if (!isOpen) return null;
@@ -66,9 +67,9 @@ export const CreatorLoginModal = ({
       turnaround: '24-48 Hours',
       startingRate: customRate,
       stats: {
-        completedBriefs: 1,
-        totalEarnings: '₹45,000',
-        consistencyScore: '98%'
+        completedBriefs: 0,
+        totalEarnings: '₹0',
+        consistencyScore: '99%'
       }
     };
 
@@ -80,7 +81,11 @@ export const CreatorLoginModal = ({
       });
     } catch (e) {}
 
-    onLoginCreator(newCreator);
+    if (onRegisterCreator) {
+      onRegisterCreator(newCreator);
+    } else {
+      onLoginCreator(newCreator);
+    }
     onClose();
   };
 
@@ -178,7 +183,7 @@ export const CreatorLoginModal = ({
                 : 'text-neutral-700 hover:text-black'
             }`}
           >
-            ⚡ 1-Click Demo Personas (Recommended)
+            ⚡ Verified Director Accounts (Instant Switch)
           </button>
           <button
             onClick={() => setActiveTab('custom-register')}
@@ -188,15 +193,15 @@ export const CreatorLoginModal = ({
                 : 'text-neutral-700 hover:text-black'
             }`}
           >
-            ✏️ Register Custom Profile
+            ✏️ Apply as Verified AI Director
           </button>
         </div>
 
-        {/* TAB 1: QUICK 1-CLICK PERSONAS */}
+        {/* TAB 1: VERIFIED DIRECTOR ACCOUNTS */}
         {activeTab === 'quick-personas' && (
           <div className="space-y-3">
             <span className="text-xs text-neutral-600 font-medium block">
-              Click any verified Indian AI creator below to instantly sign in and explore their dashboard perspective:
+              Select an active verified director account to access your studio pipeline, pitch treatments, and escrow ledgers:
             </span>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-1">

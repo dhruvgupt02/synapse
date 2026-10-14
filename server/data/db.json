@@ -905,7 +905,7 @@
       "totalMilestones": 3,
       "milestoneTitle": "Milestone 2: Kundan Gemstone Caustics & Rajputana Courtyard Multi-Shot Continuity",
       "escrowAmount": "₹5,50,000 (Escrow Locked in Synapse Protocol)",
-      "status": "Ready for Review",
+      "status": "Milestone Approved",
       "activeSeedA": {
         "seedId": "#7829104821",
         "label": "Seed A (Baseline Prompt v1)",
@@ -964,6 +964,11 @@
       ],
       "history": [
         {
+          "version": "Milestone 2 Approved & Settled",
+          "date": "Just now",
+          "status": "Escrow Released (0x2d7a1116...)"
+        },
+        {
           "version": "v1.0 (Rough Udaipur Keyframes)",
           "date": "3 days ago",
           "status": "Approved"
@@ -978,7 +983,20 @@
           "date": "Upcoming",
           "status": "Pending Milestone 2 Approval"
         }
-      ]
+      ],
+      "isEscrowReleased": true,
+      "escrowSettlement": {
+        "txHash": "0x2d7a1116a423dc2ef15401cbaa546bcbb64db45a",
+        "manifestHash": "sha256:76d1173bacf4d3579ae979257b1441d9f64cf9b0c829f84d6c43bdc3b9200d20",
+        "releasedAt": "2026-10-14T02:41:16.767Z",
+        "amount": "₹5,50,000 (Escrow Locked in Synapse Protocol)",
+        "beneficiary": "Aarav Sharma",
+        "client": "Titan Company (Tanishq)",
+        "taxInvoiceNumber": "INV-SYN-676767",
+        "gstin": "27AABCS1429B1Z8",
+        "sacCode": "998311",
+        "asciComplianceStatus": "Grade A+ Certified"
+      }
     },
     {
       "id": "delivery-proj-ind-2",

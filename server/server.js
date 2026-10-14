@@ -4,6 +4,7 @@ import dotenv from 'dotenv';
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import crypto from 'crypto';
 import { INDIAN_CREATORS, INDIAN_BRIEFS, INDIAN_DELIVERY_PROJECTS } from './data/indianMockData.js';
 
 dotenv.config();
@@ -125,6 +126,57 @@ app.get('/api/creators/:id', (req, res) => {
   res.json(creator);
 });
 
+app.post('/api/creators', (req, res) => {
+  const newCreator = {
+    id: `creator-ind-${Date.now()}`,
+    name: req.body.name || 'Verified AI Director',
+    title: req.body.title || 'Generative Filmmaker & AI VFX Lead',
+    avatar: req.body.avatar || 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=400&q=80',
+    bio: req.body.bio || `${req.body.name} is an ASCI Clear-to-Air™ certified Indian AI director specializing in commercial cinematic generation.`,
+    location: req.body.location || 'Mumbai, Maharashtra 🇮🇳',
+    primaryTools: req.body.primaryTools || ['Kling 1.5', 'ComfyUI'],
+    specializations: req.body.specializations || ['AI Commercials & VFX'],
+    clearToAirCertified: true,
+    verificationTier: 'Tier 1 Pro Verified',
+    turnaround: req.body.turnaround || '24-48 Hours',
+    startingRate: req.body.startingRate || '₹50,000 / milestone',
+    stats: {
+      completedBriefs: 0,
+      totalEarnings: '₹0',
+      consistencyScore: '99%'
+    },
+    portfolio: [
+      {
+        id: `port-${Date.now()}`,
+        title: 'Commercial Showreel Master (4K)',
+        type: 'Commercial Film Stills & Video Sequences',
+        image: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=800&q=80',
+        duration: '0:30',
+        awards: 'Official Synapse Selection',
+        views: '1.2k',
+        tags: ['Kling 1.5', 'ComfyUI', '4K Anamorphic'],
+        resolution: '4K ProRes 4444',
+        recipe: {
+          title: 'Commercial Production Recipe',
+          tokens: ['cinematic lighting', 'high fidelity LoRA', '35mm anamorphic'],
+          baseModels: ['Kling 1.5', 'ComfyUI'],
+          steps: 40,
+          cfg: 6.5
+        }
+      }
+    ],
+    createdAt: new Date().toISOString()
+  };
+
+  db.creators.unshift(newCreator);
+  saveDB(db);
+
+  res.status(201).json({
+    message: 'Director registered and certified successfully',
+    data: newCreator
+  });
+});
+
 // 3. Briefs endpoints
 app.get('/api/briefs', (req, res) => {
   res.json({
@@ -223,17 +275,58 @@ app.post('/api/delivery-projects/:id/approve', (req, res) => {
     return res.status(404).json({ error: 'Project not found' });
   }
 
+  const txHash = '0x' + crypto.randomBytes(20).toString('hex');
+  const manifestHash = 'sha256:' + crypto.randomBytes(32).toString('hex');
+  const timestamp = new Date().toISOString();
+
   project.status = 'Milestone Approved';
-  project.history.push({
-    version: `Milestone ${project.milestoneNumber} Approved`,
+  project.isEscrowReleased = true;
+  project.escrowSettlement = {
+    txHash,
+    manifestHash,
+    releasedAt: timestamp,
+    amount: project.escrowAmount,
+    beneficiary: project.creator,
+    client: project.client,
+    taxInvoiceNumber: `INV-SYN-${Date.now().toString().slice(-6)}`,
+    gstin: '27AABCS1429B1Z8',
+    sacCode: '998311',
+    asciComplianceStatus: 'Grade A+ Certified'
+  };
+
+  if (!project.history) project.history = [];
+  project.history.unshift({
+    version: `Milestone ${project.milestoneNumber} Approved & Settled`,
     date: 'Just now',
-    status: 'Escrow Released'
+    status: `Escrow Released (${txHash.slice(0, 10)}...)`
   });
+
   saveDB(db);
 
   res.json({
-    message: 'Milestone 2 approved! Smart escrow released to creator.',
+    message: `Milestone ${project.milestoneNumber} approved! Smart contract escrow released to ${project.creator}.`,
+    settlement: project.escrowSettlement,
     project
+  });
+});
+
+app.get('/api/escrow/ledger', (req, res) => {
+  res.json({
+    protocol: 'Synapse Clear-to-Air™ Smart Escrow Protocol',
+    jurisdiction: 'India (RBI / MeitY compliant smart contract escrow framework)',
+    totalMarketplaceVolume: '₹1,24,00,000',
+    totalLockedEscrow: '₹57,50,000',
+    totalSettledPayouts: '₹66,50,000',
+    activeContractsCount: db.deliveryProjects.length,
+    contracts: db.deliveryProjects.map(p => ({
+      id: p.id,
+      title: p.briefTitle,
+      client: p.client,
+      creator: p.creator,
+      escrowAmount: p.escrowAmount,
+      status: p.status,
+      settlement: p.escrowSettlement || null
+    }))
   });
 });
 

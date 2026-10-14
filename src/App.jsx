@@ -31,7 +31,8 @@ import {
   fetchCreators, 
   fetchBriefs, 
   fetchDeliveryProjects, 
-  createBrief
+  createBrief,
+  registerCreatorAPI
 } from './utils/api';
 
 import { Sparkles, ShieldCheck, Zap, ArrowRight, Film, CheckCircle2, Award, Globe, Grid } from 'lucide-react';
@@ -121,6 +122,18 @@ export function App() {
     setUserRole('brand');
     saveUserRoleToStorage('brand');
     showToast('Switched back to Brand Mode', 'info');
+  };
+
+  const handleRegisterCreator = async (creatorData) => {
+    try {
+      const saved = await registerCreatorAPI(creatorData);
+      setCreators(prev => [saved, ...prev]);
+      handleLoginCreator(saved);
+      showToast(`Welcome ${saved.name}! Your director profile is verified & live on Synapse India.`, 'success');
+    } catch (e) {
+      setCreators(prev => [creatorData, ...prev]);
+      handleLoginCreator(creatorData);
+    }
   };
 
   // Saved Creators Toggle
@@ -720,6 +733,7 @@ export function App() {
           loggedInCreator={loggedInCreator}
           onLoginCreator={handleLoginCreator}
           onLogoutCreator={handleLogoutCreator}
+          onRegisterCreator={handleRegisterCreator}
         />
 
         {/* Footer */}

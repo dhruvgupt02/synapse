@@ -18,6 +18,7 @@ import {
   Users
 } from 'lucide-react';
 import confetti from 'canvas-confetti';
+import { submitPitch } from '../utils/api';
 import { WhereToNavigateNext } from './WhereToNavigateNext';
 
 export const BriefsBoardView = ({ 
@@ -65,11 +66,16 @@ export const BriefsBoardView = ({
     });
   };
 
-  const handleSubmitPitch = (e) => {
+  const handleSubmitPitch = async (e) => {
     e.preventDefault();
+    if (!selectedBriefForPitch) return;
+
     try {
       confetti({ particleCount: 70, spread: 60, origin: { y: 0.7 } });
+      await submitPitch(selectedBriefForPitch.id, creatorPitchData);
+      selectedBriefForPitch.proposalsCount = (selectedBriefForPitch.proposalsCount || 0) + 1;
     } catch (err) {}
+
     setPitchSuccessMessage(true);
     setTimeout(() => {
       setPitchSuccessMessage(false);

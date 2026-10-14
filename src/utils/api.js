@@ -26,6 +26,22 @@ export const fetchCreators = async (params = {}) => {
   }
 };
 
+export const registerCreatorAPI = async (creatorData) => {
+  try {
+    const res = await fetch(`${API_BASE}/creators`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(creatorData)
+    });
+    if (!res.ok) throw new Error('Failed to register creator on server');
+    const json = await res.json();
+    return json.data;
+  } catch (err) {
+    console.warn('Server registration fallback to local state:', err);
+    return creatorData;
+  }
+};
+
 export const fetchBriefs = async () => {
   try {
     const res = await fetch(`${API_BASE}/briefs`);
