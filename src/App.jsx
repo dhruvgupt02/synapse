@@ -11,7 +11,6 @@ import { BriefsBoardView } from './components/BriefsBoardView';
 import { DeliveryStudioView } from './components/DeliveryStudioView';
 import { BookCreatorModal } from './components/BookCreatorModal';
 import { CreatorLoginModal } from './components/CreatorLoginModal';
-import { HackathonDemoRoadmap } from './components/HackathonDemoRoadmap';
 import { WhereToNavigateNext } from './components/WhereToNavigateNext';
 
 import { INITIAL_CREATORS } from './data/mockData';
@@ -262,20 +261,6 @@ export function App() {
           onActionClick={() => setActiveTab(userRole === 'brand' ? 'brief-builder' : 'briefs')}
           loggedInCreator={loggedInCreator}
           onOpenCreatorLogin={() => setIsCreatorLoginOpen(true)}
-        />
-
-        {/* Hackathon 5-Step Demo Roadmap & Navigation Stepper */}
-        <HackathonDemoRoadmap 
-          activeTab={activeTab}
-          setActiveTab={(tab) => {
-            setActiveTab(tab);
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-          }}
-          onInspectDemoRecipe={() => {
-            const aarav = INITIAL_CREATORS[0];
-            const recipe = aarav?.portfolio?.[0]?.recipe || aarav?.featuredRecipe;
-            handleInspectRecipe(recipe, aarav);
-          }}
         />
 
         {/* Toast Notification Floating */}
