@@ -69,11 +69,14 @@ export const createBrief = async (briefData) => {
   }
 };
 
-export const submitPitch = async (briefId, pitchData) => {
+export const submitPitch = async (briefId, pitchData, userRole = 'creator') => {
   try {
     const res = await fetch(`${API_BASE}/briefs/${briefId}/pitch`, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: { 
+        'Content-Type': 'application/json',
+        'X-User-Role': userRole
+      },
       body: JSON.stringify(pitchData)
     });
     return await res.json();
@@ -93,11 +96,14 @@ export const fetchDeliveryProjects = async () => {
   }
 };
 
-export const addFeedbackPin = async (projectId, pinData) => {
+export const addFeedbackPin = async (projectId, pinData, userRole = 'brand') => {
   try {
     const res = await fetch(`${API_BASE}/delivery-projects/${projectId}/pins`, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: { 
+        'Content-Type': 'application/json',
+        'X-User-Role': userRole
+      },
       body: JSON.stringify(pinData)
     });
     return await res.json();
@@ -106,11 +112,29 @@ export const addFeedbackPin = async (projectId, pinData) => {
   }
 };
 
-export const approveMilestoneAPI = async (projectId) => {
+export const resolveFeedbackPin = async (projectId, pinId, userRole = 'creator') => {
+  try {
+    const res = await fetch(`${API_BASE}/delivery-projects/${projectId}/pins/${pinId}/resolve`, {
+      method: 'POST',
+      headers: { 
+        'Content-Type': 'application/json',
+        'X-User-Role': userRole
+      }
+    });
+    return await res.json();
+  } catch (err) {
+    return { success: true };
+  }
+};
+
+export const approveMilestoneAPI = async (projectId, userRole = 'brand') => {
   try {
     const res = await fetch(`${API_BASE}/delivery-projects/${projectId}/approve`, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' }
+      headers: { 
+        'Content-Type': 'application/json',
+        'X-User-Role': userRole
+      }
     });
     return await res.json();
   } catch (err) {

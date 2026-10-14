@@ -186,6 +186,13 @@ app.get('/api/briefs', (req, res) => {
 });
 
 app.post('/api/briefs', (req, res) => {
+  const userRole = req.headers['x-user-role'] || req.body.userRole || 'brand';
+  if (userRole === 'creator') {
+    return res.status(403).json({
+      error: 'Forbidden: Publishing enterprise briefs with locked ₹ INR escrow requires Brand / Agency authorization.'
+    });
+  }
+
   const newBrief = {
     id: `brief-ind-${Date.now()}`,
     title: req.body.title || 'Custom Campaign Brief',
@@ -218,6 +225,13 @@ app.post('/api/briefs', (req, res) => {
 });
 
 app.post('/api/briefs/:id/pitch', (req, res) => {
+  const userRole = req.headers['x-user-role'] || req.body.userRole || 'creator';
+  if (userRole === 'brand') {
+    return res.status(403).json({
+      error: 'Forbidden: Brand commissioners cannot submit pitches on briefs. Switch to Creator Mode.'
+    });
+  }
+
   const brief = db.briefs.find(b => b.id === req.params.id);
   if (!brief) {
     return res.status(404).json({ error: 'Brief not found' });
@@ -269,7 +283,32 @@ app.post('/api/delivery-projects/:id/pins', (req, res) => {
   });
 });
 
+app.post('/api/delivery-projects/:id/pins/:pinId/resolve', (req, res) => {
+  const project = db.deliveryProjects.find(p => p.id === req.params.id) || db.deliveryProjects[0];
+  if (!project) {
+    return res.status(404).json({ error: 'Project not found' });
+  }
+
+  const pin = project.feedbackPins?.find(p => p.id === req.params.pinId);
+  if (pin) {
+    pin.status = 'Resolved';
+    saveDB(db);
+  }
+
+  res.json({
+    message: 'Pin marked as resolved post-inpaint pass',
+    pin
+  });
+});
+
 app.post('/api/delivery-projects/:id/approve', (req, res) => {
+  const userRole = req.headers['x-user-role'] || req.body.userRole || 'brand';
+  if (userRole === 'creator') {
+    return res.status(403).json({
+      error: 'Forbidden: Dual-Key Escrow Release requires Brand / Agency authorization. Creators cannot self-release milestone escrow payouts.'
+    });
+  }
+
   const project = db.deliveryProjects.find(p => p.id === req.params.id) || db.deliveryProjects[0];
   if (!project) {
     return res.status(404).json({ error: 'Project not found' });

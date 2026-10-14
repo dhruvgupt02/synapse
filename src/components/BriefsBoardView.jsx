@@ -72,7 +72,7 @@ export const BriefsBoardView = ({
 
     try {
       confetti({ particleCount: 70, spread: 60, origin: { y: 0.7 } });
-      await submitPitch(selectedBriefForPitch.id, creatorPitchData);
+      await submitPitch(selectedBriefForPitch.id, creatorPitchData, userRole);
       selectedBriefForPitch.proposalsCount = (selectedBriefForPitch.proposalsCount || 0) + 1;
     } catch (err) {}
 

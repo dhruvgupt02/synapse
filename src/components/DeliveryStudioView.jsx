@@ -29,7 +29,7 @@ import {
 } from 'lucide-react';
 import confetti from 'canvas-confetti';
 import { INITIAL_DELIVERY_PROJECTS } from '../data/mockData';
-import { addFeedbackPin, approveMilestoneAPI } from '../utils/api';
+import { addFeedbackPin, approveMilestoneAPI, resolveFeedbackPin } from '../utils/api';
 import { WhereToNavigateNext } from './WhereToNavigateNext';
 
 export const DeliveryStudioView = ({ 
@@ -120,7 +120,32 @@ export const DeliveryStudioView = ({
     }
   };
 
+  const handleResolvePin = async (pinId) => {
+    const updated = pins.map(p => 
+      p.id === pinId ? { ...p, status: 'Resolved' } : p
+    );
+    setPins(updated);
+
+    try {
+      await resolveFeedbackPin(project.id, pinId, userRole);
+    } catch (err) {
+      console.warn('Live API pin resolve error:', err.message);
+    }
+
+    if (onUpdateProjects && deliveryProjects) {
+      const updatedProjects = deliveryProjects.map(p => 
+        p.id === project.id ? { ...p, feedbackPins: updated } : p
+      );
+      onUpdateProjects(updatedProjects);
+    }
+  };
+
   const handleApproveMilestone = async () => {
+    if (userRole !== 'brand') {
+      alert('Dual-Key Escrow Release requires Brand authorization. AI Directors cannot self-authorize milestone payouts.');
+      return;
+    }
+
     try {
       confetti({
         particleCount: 120,
@@ -134,9 +159,9 @@ export const DeliveryStudioView = ({
       [project.id]: true
     });
 
-    // Call live backend settlement API
+    // Call live backend settlement API with Brand authorization
     try {
-      const res = await approveMilestoneAPI(project.id);
+      const res = await approveMilestoneAPI(project.id, userRole);
       if (res && res.settlement) {
         setSettlementDetails(res.settlement);
       }
@@ -370,30 +395,56 @@ export const DeliveryStudioView = ({
               <span>Tax Invoice (GST)</span>
             </button>
 
-            <button
-              onClick={() => setShowRerollModal(true)}
-              className="flex items-center gap-1.5 px-4 py-2 rounded-full bg-[#faf6f0] hover:bg-neutral-200 text-neutral-900 text-xs font-bold border border-[#dfd5c4] transition-colors"
-            >
-              <RotateCcw className="w-3.5 h-3.5 text-amber-500" />
-              <span>Request Re-roll</span>
-            </button>
+            {userRole === 'brand' ? (
+              <>
+                <button
+                  onClick={() => setShowRerollModal(true)}
+                  className="flex items-center gap-1.5 px-4 py-2 rounded-full bg-[#faf6f0] hover:bg-neutral-200 text-neutral-900 text-xs font-bold border border-[#dfd5c4] transition-colors"
+                >
+                  <RotateCcw className="w-3.5 h-3.5 text-amber-500" />
+                  <span>Request Re-roll</span>
+                </button>
 
-            <button
-              onClick={handleApproveMilestone}
-              disabled={isMilestoneApproved}
-              className={`flex items-center gap-2 px-5 py-2.5 rounded-full text-xs font-black transition-all shadow-md ${
-                isMilestoneApproved
-                  ? 'bg-emerald-600 text-white cursor-default'
-                  : 'bg-black hover:bg-neutral-900 text-white hover:scale-105 active:scale-95'
-              }`}
-            >
-              <CheckCircle2 className={`w-4 h-4 ${isMilestoneApproved ? 'text-white' : 'text-[#ff5522]'}`} />
-              <span>
-                {isMilestoneApproved 
-                  ? `Milestone ${project.milestoneNumber} Approved (Escrow Released!)` 
-                  : `Approve Milestone ${project.milestoneNumber} & Release Escrow`}
-              </span>
-            </button>
+                <button
+                  onClick={handleApproveMilestone}
+                  disabled={isMilestoneApproved}
+                  className={`flex items-center gap-2 px-5 py-2.5 rounded-full text-xs font-black transition-all shadow-md ${
+                    isMilestoneApproved
+                      ? 'bg-emerald-600 text-white cursor-default'
+                      : 'bg-black hover:bg-neutral-900 text-white hover:scale-105 active:scale-95'
+                  }`}
+                >
+                  <CheckCircle2 className={`w-4 h-4 ${isMilestoneApproved ? 'text-white' : 'text-[#ff5522]'}`} />
+                  <span>
+                    {isMilestoneApproved 
+                      ? `Milestone ${project.milestoneNumber} Approved (Escrow Released!)` 
+                      : `Approve Milestone ${project.milestoneNumber} & Release Escrow`}
+                  </span>
+                </button>
+              </>
+            ) : (
+              <>
+                <button
+                  onClick={() => setShowRerollModal(true)}
+                  className="flex items-center gap-1.5 px-4 py-2 rounded-full bg-zinc-900 hover:bg-zinc-800 text-white text-xs font-bold border border-zinc-700 transition-colors"
+                >
+                  <Sparkles className="w-3.5 h-3.5 text-[#ff5522]" />
+                  <span>Submit Seed Refinement (v2)</span>
+                </button>
+
+                <div 
+                  className="flex items-center gap-2 px-4 py-2 rounded-full bg-zinc-900/90 border border-zinc-700 text-xs font-bold text-zinc-300"
+                  title="Dual-Key Governance: Escrow release requires client sign-off."
+                >
+                  <Lock className="w-3.5 h-3.5 text-amber-400" />
+                  <span>
+                    {isMilestoneApproved 
+                      ? `Milestone ${project.milestoneNumber} Approved by Client (Escrow Released)` 
+                      : `Awaiting Client Milestone Sign-Off & Escrow Release`}
+                  </span>
+                </div>
+              </>
+            )}
           </div>
 
         </div>
@@ -854,6 +905,19 @@ export const DeliveryStudioView = ({
                     <span>Coord: ({pin.x}%, {pin.y}%)</span>
                     <span>{pin.createdAt}</span>
                   </div>
+
+                  {userRole === 'creator' && pin.status !== 'Resolved' && (
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleResolvePin(pin.id);
+                      }}
+                      className="w-full mt-2 py-1.5 px-3 rounded-xl bg-emerald-500/15 hover:bg-emerald-500/25 text-emerald-300 border border-emerald-500/30 text-xs font-bold flex items-center justify-center gap-1.5 transition-all shadow-sm"
+                    >
+                      <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400" />
+                      <span>Mark Inpaint Resolved</span>
+                    </button>
+                  )}
                 </div>
               ))}
             </div>

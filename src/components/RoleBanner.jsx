@@ -6,7 +6,8 @@ export const RoleBanner = ({
   setUserRole, 
   onActionClick, 
   loggedInCreator, 
-  onOpenCreatorLogin 
+  onOpenCreatorLogin,
+  onOpenAccessModal
 }) => {
   return (
     <div className="w-full border-y border-[#dfd5c4]/70 bg-[#ede4d7]/60 py-2 px-5 sm:px-10">
@@ -48,6 +49,18 @@ export const RoleBanner = ({
             >
               <Sparkles className="w-3 h-3 text-[#ff5522]" />
               <span>{loggedInCreator ? 'Switch Persona ▾' : 'Choose Creator Persona ▾'}</span>
+            </button>
+          )}
+
+          {/* Access Management / RBAC Modal Trigger */}
+          {onOpenAccessModal && (
+            <button
+              onClick={onOpenAccessModal}
+              className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-white hover:bg-neutral-50 text-neutral-800 border border-[#dfd5c4] text-[11px] font-bold shadow-sm transition-all hover:border-black/50"
+              title="Inspect Role-Based Access Control and Smart Escrow Permissions"
+            >
+              <ShieldCheck className="w-3.5 h-3.5 text-emerald-600" />
+              <span>RBAC & Permissions Matrix</span>
             </button>
           )}
 

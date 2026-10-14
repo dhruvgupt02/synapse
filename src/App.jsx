@@ -11,6 +11,7 @@ import { BriefsBoardView } from './components/BriefsBoardView';
 import { DeliveryStudioView } from './components/DeliveryStudioView';
 import { BookCreatorModal } from './components/BookCreatorModal';
 import { CreatorLoginModal } from './components/CreatorLoginModal';
+import { AccessManagementModal } from './components/AccessManagementModal';
 import { WhereToNavigateNext } from './components/WhereToNavigateNext';
 
 import { INITIAL_CREATORS } from './data/mockData';
@@ -56,6 +57,7 @@ export function App() {
   const [preloadedRecipeForBrief, setPreloadedRecipeForBrief] = useState(null);
   const [loggedInCreator, setLoggedInCreator] = useState(getStoredLoggedInCreator());
   const [isCreatorLoginOpen, setIsCreatorLoginOpen] = useState(false);
+  const [isAccessModalOpen, setIsAccessModalOpen] = useState(false);
 
   // Filter States for 'explore' tab
   const [searchQuery, setSearchQuery] = useState('');
@@ -265,6 +267,7 @@ export function App() {
           onOpenBriefModal={() => setActiveTab('brief-builder')}
           loggedInCreator={loggedInCreator}
           onOpenCreatorLogin={() => setIsCreatorLoginOpen(true)}
+          onOpenAccessModal={() => setIsAccessModalOpen(true)}
         />
 
         {/* Dynamic Role Banner */}
@@ -274,6 +277,7 @@ export function App() {
           onActionClick={() => setActiveTab(userRole === 'brand' ? 'brief-builder' : 'briefs')}
           loggedInCreator={loggedInCreator}
           onOpenCreatorLogin={() => setIsCreatorLoginOpen(true)}
+          onOpenAccessModal={() => setIsAccessModalOpen(true)}
         />
 
         {/* Toast Notification Floating */}
@@ -666,6 +670,7 @@ export function App() {
           {/* VIEW 3: AI-ASSISTED BRIEF BUILDER */}
           {activeTab === 'brief-builder' && (
             <BriefBuilderView 
+              userRole={userRole}
               onPublishBrief={handlePublishBrief}
               preloadedRecipe={preloadedRecipeForBrief}
               onNavigate={(tab) => {
@@ -734,6 +739,15 @@ export function App() {
           onLoginCreator={handleLoginCreator}
           onLogoutCreator={handleLogoutCreator}
           onRegisterCreator={handleRegisterCreator}
+        />
+
+        {/* ACCESS MANAGEMENT & RBAC GOVERNANCE MODAL */}
+        <AccessManagementModal 
+          isOpen={isAccessModalOpen}
+          onClose={() => setIsAccessModalOpen(false)}
+          userRole={userRole}
+          onSetUserRole={handleSetUserRole}
+          loggedInCreator={loggedInCreator}
         />
 
         {/* Footer */}

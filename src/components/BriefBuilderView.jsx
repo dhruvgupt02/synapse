@@ -64,7 +64,7 @@ const INDIAN_PRESET_CAMPAIGNS = [
   }
 ];
 
-export const BriefBuilderView = ({ onPublishBrief, preloadedRecipe, onNavigate }) => {
+export const BriefBuilderView = ({ onPublishBrief, preloadedRecipe, onNavigate, userRole = 'brand' }) => {
   const [currentStep, setCurrentStep] = useState(1);
   const [isDeconstructing, setIsDeconstructing] = useState(false);
   const [deconstructProgress, setDeconstructProgress] = useState(0);
@@ -199,6 +199,11 @@ export const BriefBuilderView = ({ onPublishBrief, preloadedRecipe, onNavigate }
   };
 
   const handlePublish = () => {
+    if (userRole === 'creator') {
+      alert('Brand Commissioning Authorization Required: Creators cannot publish live briefs with ₹ INR smart escrow locks. Please switch to Brand Mode.');
+      return;
+    }
+
     try {
       confetti({
         particleCount: 110,
@@ -236,6 +241,24 @@ export const BriefBuilderView = ({ onPublishBrief, preloadedRecipe, onNavigate }
   return (
     <div className="w-full max-w-6xl mx-auto space-y-8 animate-fadeIn pb-16">
       
+      {/* Creator Sandbox Mode Banner */}
+      {userRole === 'creator' && (
+        <div className="p-4 rounded-2xl bg-amber-500/10 border border-amber-500/30 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 text-xs text-amber-200">
+          <div className="flex items-center gap-2.5">
+            <Lock className="w-5 h-5 text-amber-400 shrink-0" />
+            <div>
+              <span className="font-bold text-amber-300">Creator Perspective Preview:</span> You can explore style token deconstruction and spec architecture. To publish live briefs and commit ₹ INR funds into smart contract escrow, Brand / Agency authorization is required.
+            </div>
+          </div>
+          <button
+            onClick={() => onNavigate && onNavigate('briefs')}
+            className="px-3.5 py-1.5 rounded-xl bg-amber-500 hover:bg-amber-600 text-black font-bold text-xs whitespace-nowrap transition-colors"
+          >
+            Explore Open Briefs to Pitch ↗
+          </button>
+        </div>
+      )}
+
       {/* Wizard Header */}
       <div className="text-center max-w-2xl mx-auto space-y-3">
         <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-orange-500/10 text-orange-400 border border-orange-500/20 text-xs font-semibold">
