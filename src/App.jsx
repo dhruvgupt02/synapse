@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Analytics } from '@vercel/analytics/react';
 import { Navbar } from './components/Navbar';
 import { RoleBanner } from './components/RoleBanner';
 import { CreatorCard } from './components/CreatorCard';
@@ -250,6 +251,7 @@ export function App() {
 
   return (
     <div className="min-h-screen bg-[#f3efe8] p-2 sm:p-5 md:p-8 flex justify-center items-start font-sans selection:bg-[#ff5522] selection:text-white">
+      <Analytics route={`/${activeTab}`} path={`/${activeTab}`} />
       
       {/* Outer Enterprise Studio Canvas */}
       <div className="w-full max-w-[1420px] paper-canvas rounded-[24px] sm:rounded-[36px] overflow-hidden border border-[#d8ccbb]/80 shadow-2xl relative flex flex-col min-h-[96vh]">
