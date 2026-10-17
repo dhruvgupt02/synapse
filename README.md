@@ -6,6 +6,7 @@
 
 ## 🌟 Key Features
 
+
 1. **Dual Perspective "Role Switcher"**: Seamless toggle between **"Brand / Agency"** view and **"AI Creator"** view.
 2. **Creator Discovery & Smart Filtering**: Real-time filtering by AI Tools (*Kling 1.5, Runway Gen-3, Midjourney v6.1, Flux.1, ComfyUI, ElevenLabs, Sora, Adobe Firefly, Topaz 4K*), Specializations, and **Clear-to-Air™** safety certification with intelligent toolchain fallbacks.
 3. **"Recipe-First" AI Portfolios**: Inspectable generative production recipes detailing:
